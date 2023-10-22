@@ -1,0 +1,1 @@
+../windows/windowsserver/windows-2022.pkr.hcl

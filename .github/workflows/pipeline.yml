@@ -60,7 +60,7 @@ jobs:
         run: packer -v
 
       - name: Ansible version
-        run: ansible --versio
+        run: ansible --version
 
       - name: Terraform version
         run: terraform -v
