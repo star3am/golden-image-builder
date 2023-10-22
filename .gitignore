@@ -3,6 +3,7 @@ packer_cache
 .env
 **tfstate**
 .terraform**
+!.terraform-version
 .DS_Store
 output/*
 *.log
