@@ -1,0 +1,53 @@
+#!/bin/bash
+
+if [ "$TOWER_HOST" = "null" ]; then
+  printf "Tower Host is null, this is a Test, skipping Tower Call"
+  exit 0
+fi
+
+prepare_environment() {
+  # https://people.redhat.com/grieger/summit2020_labs/ansible-tower-advanced/4-awx-cli-exercises/
+  export PATH="/opt/venv/bin:$PATH"
+  export AWX_COMMON="--conf.format human --conf.insecure --conf.host https://$TOWER_HOST:8043 --conf.username $TOWER_USERNAME --conf.password $TOWER_PASSWORD"
+}
+
+install_dependencies() {
+  printf "Ensure Ansible Tower CLI is Installed"
+  python3 -m pip install awxkit --quiet
+}
+
+setup_ansible() {
+  printf "Authenticating to Ansible Tower"
+  #$(awx login --conf.format human --conf.insecure --conf.host https://$TOWER_HOST:8043 --conf.username $TOWER_USERNAME --conf.password $TOWER_PASSWORD)
+}
+
+configure_vm() {
+  printf "Sleep 300s give the VM time to boot"
+  sleep 300
+  printf "Configuring VM with baseline configuration"
+  awx hosts create --id $VM_PUBLIC_IP_ADDRESS --description $VM_NAME --inventory 1 --enabled true --name $VM_PUBLIC_IP_ADDRESS $AWX_COMMON
+
+  awx job_templates launch 9 \
+    --limit $VM_PUBLIC_IP_ADDRESS \
+    --monitor \
+    --filter status $AWX_COMMON \
+    --job_tags "day1,always" \
+    --extra_vars "{\"vm_name\":\"$VM_NAME\", \"vm_ip\":\"$VM_PUBLIC_IP_ADDRESS\"}"
+
+  if [ $? -eq 0 ]
+  then
+    printf "Successfully configured VM"
+    exit 0
+  else
+    printf "Failed to configure VM, deploy pipeline to retry"
+    exit 1
+  fi
+
+  echo "Remove host from inventory"
+  awx hosts delete --id "$(awx hosts list $AWX_COMMON | grep "$VM_PUBLIC_IP_ADDRESS" | cut -d ' ' -f1)" $AWX_COMMON
+}
+
+prepare_environment
+install_dependencies
+setup_ansible
+configure_vm
