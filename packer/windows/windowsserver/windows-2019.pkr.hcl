@@ -120,7 +120,7 @@ build {
       "ansible_ssh_pass=${build.User} version_number=${local.version_number} ansible_shell_type=cmd ansible_shell_executable=None"
     ]
     host_alias    = "none"
-    playbook_file = "./ansible/ansible-role-example-role/site.yml"
+    playbook_file = "./ansible/roles/ansible-role-example-role/site.yml"
     only          = ["vagrant.windows-2019"]
   }
 
@@ -145,25 +145,6 @@ build {
 
   provisioner "ansible" {
     command   = "./packer/scripts/ansible.sh"
-    user      = "vagrant"
-    use_proxy = false
-    ansible_env_vars = [
-      "ANSIBLE_HOST_KEY_CHECKING=False",
-      "ANSIBLE_SSH_ARGS='-o ForwardAgent=yes -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'",
-      "ANSIBLE_NOCOLOR=True"
-    ]
-    extra_arguments = [
-      # "-vvv",
-      "--extra-vars",
-      "ansible_ssh_pass=vagrant version_number=${local.version_number} ansible_shell_type=cmd ansible_shell_executable=None ansbile_become=yes ansible_become_method=runas"
-    ]
-    host_alias    = "none"
-    playbook_file = "./ansible/ansible-role-vm-config/site.yml"
-    only          = ["vagrant.windows-2019"]
-  }
-
-  provisioner "ansible" {
-    command   = "./packer/scripts/ansible.sh"
     user      = "${build.User}"
     use_proxy = false
     extra_arguments = [
@@ -172,37 +153,7 @@ build {
       "ansible_winrm_server_cert_validation=ignore version_number=${local.version_number}"
     ]
     host_alias    = "none"
-    playbook_file = "./ansible/ansible-role-example-role/site.yml"
-    only          = ["amazon-ebs.windows-2019", "googlecompute.windows-2019", "azure-arm.windows-2019"]
-  }
-
-  /*
-  provisioner "ansible" {
-    command   = "./packer/scripts/ansible.sh"
-    user      = "${build.User}"
-    use_proxy = false
-    extra_arguments = [
-      #"-v",
-      "--extra-vars",
-      "ansible_winrm_server_cert_validation=ignore version_number=${local.version_number}"
-    ]
-    host_alias    = "none"
-    playbook_file = "./ansible/ansible-role-win_openssh/site.yml"
-    only          = ["amazon-ebs.windows-2019", "googlecompute.windows-2019", "azure-arm.windows-2019"]
-  }
-  */
-
-  provisioner "ansible" {
-    command   = "./packer/scripts/ansible.sh"
-    user      = "${build.User}"
-    use_proxy = false
-    extra_arguments = [
-      # "-vvv",
-      "--extra-vars",
-      "ansible_winrm_server_cert_validation=ignore version_number=${local.version_number} ansbile_become=yes ansible_become_method=runas"
-    ]
-    host_alias    = "none"
-    playbook_file = "./ansible/ansible-role-vm-config/site.yml"
+    playbook_file = "./ansible/roles/ansible-role-example-role/site.yml"
     only          = ["amazon-ebs.windows-2019", "googlecompute.windows-2019", "azure-arm.windows-2019"]
   }
 
@@ -216,7 +167,7 @@ build {
       "ansible_winrm_server_cert_validation=ignore version_number=${local.version_number}"
     ]
     host_alias    = "none"
-    playbook_file = "./ansible/ansible-role-example-role/site.yml"
+    playbook_file = "./ansible/roles/ansible-role-example-role/site.yml"
     only          = ["amazon-ebs.windows-2019", "googlecompute.windows-2019", "azure-arm.windows-2019"]
   }
 

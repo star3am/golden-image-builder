@@ -96,7 +96,7 @@ build {
       "--extra-vars", "ansible_become=true version_number=${local.version_number}"
     ]
     host_alias    = "none"
-    playbook_file = "./ansible/ansible-role-example-role/site.yml"
+    playbook_file = "./ansible/roles/ansible-role-example-role/site.yml"
   }
 
   provisioner "ansible" {

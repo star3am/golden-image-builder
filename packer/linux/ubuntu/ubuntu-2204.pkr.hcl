@@ -100,7 +100,7 @@ build {
       "-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
     ]
     host_alias    = "none"
-    playbook_file = "./ansible/ansible-role-example-role/site.yml"
+    playbook_file = "./ansible/roles/ansible-role-example-role/site.yml"
   }
 
   provisioner "ansible" {

@@ -158,7 +158,7 @@ build {
       "ansible_ssh_pass=vagrant version_number=${local.version_number} ansible_shell_type=cmd ansible_shell_executable=None ansbile_become=yes ansible_become_method=runas"
     ]
     host_alias    = "none"
-    playbook_file = "./ansible/ansible-role-vm-config/site.yml"
+    playbook_file = "./ansible/roles/ansible-role-vm-config/site.yml"
     only          = ["vagrant.windows-2022"]
   }
 
@@ -172,37 +172,7 @@ build {
       "ansible_winrm_server_cert_validation=ignore version_number=${local.version_number}"
     ]
     host_alias    = "none"
-    playbook_file = "./ansible/ansible-role-example-role/site.yml"
-    only          = ["amazon-ebs.windows-2022", "googlecompute.windows-2022", "azure-arm.windows-2022"]
-  }
-
-  /*
-  provisioner "ansible" {
-    command   = "./packer/scripts/ansible.sh"
-    user      = "${build.User}"
-    use_proxy = false
-    extra_arguments = [
-      #"-v",
-      "--extra-vars",
-      "ansible_winrm_server_cert_validation=ignore version_number=${local.version_number}"
-    ]
-    host_alias    = "none"
-    playbook_file = "./ansible/ansible-role-win_openssh/site.yml"
-    only          = ["amazon-ebs.windows-2022", "googlecompute.windows-2022", "azure-arm.windows-2022"]
-  }
-  */
-
-  provisioner "ansible" {
-    command   = "./packer/scripts/ansible.sh"
-    user      = "${build.User}"
-    use_proxy = false
-    extra_arguments = [
-      # "-vvv",
-      "--extra-vars",
-      "ansible_winrm_server_cert_validation=ignore version_number=${local.version_number} ansbile_become=yes ansible_become_method=runas"
-    ]
-    host_alias    = "none"
-    playbook_file = "./ansible/ansible-role-vm-config/site.yml"
+    playbook_file = "./ansible/roles/ansible-role-example-role/site.yml"
     only          = ["amazon-ebs.windows-2022", "googlecompute.windows-2022", "azure-arm.windows-2022"]
   }
 
@@ -216,7 +186,7 @@ build {
       "ansible_winrm_server_cert_validation=ignore version_number=${local.version_number}"
     ]
     host_alias    = "none"
-    playbook_file = "./ansible/ansible-role-example-role/site.yml"
+    playbook_file = "./ansible/roles/ansible-role-example-role/site.yml"
     only          = ["amazon-ebs.windows-2022", "googlecompute.windows-2022", "azure-arm.windows-2022"]
   }
 

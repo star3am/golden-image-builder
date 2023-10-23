@@ -114,7 +114,7 @@ build {
       "ansible_ssh_pass=${build.User} version_number=${local.version_number} ansible_shell_type=cmd ansible_shell_executable=None"
     ]
     host_alias    = "none"
-    playbook_file = "./ansible/ansible-role-example-role/site.yml"
+    playbook_file = "./ansible/roles/ansible-role-example-role/site.yml"
     only          = ["vagrant.windows-2016"]
   }
 
@@ -152,7 +152,7 @@ build {
       "ansible_winrm_server_cert_validation=ignore ansible_connection=winrm ansible_shell_type=powershell ansible_shell_executable=None ansible_user=${build.User}"
     ]
     host_alias    = "none"
-    playbook_file = "./ansible/ansible-role-example-role/site.yml"
+    playbook_file = "./ansible/roles/ansible-role-example-role/site.yml"
     only          = ["amazon-ebs.windows-2016", "googlecompute.windows-2016", "azure-arm.windows-2016"]
   }
 
