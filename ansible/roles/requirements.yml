@@ -34,3 +34,7 @@
 - src: 'https://github.com/star3am/ansible-role-win_openssh'
   version: 'ssh-playbook-test'
   scm: 'git'
+
+- src: 'https://github.com/star3am/ansible-role-example-role'
+  version: 'master'
+  scm: 'git'
