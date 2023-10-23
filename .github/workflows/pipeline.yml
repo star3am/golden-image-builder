@@ -106,7 +106,7 @@ jobs:
         run: packer -v
 
       - name: Packer init
-        run: packer init
+        run: packer init -upgrade
 
       - name: Packer build
         run: packer build -force -only='amazon-ebs.*' packer/all
