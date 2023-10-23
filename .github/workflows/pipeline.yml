@@ -14,11 +14,11 @@ on:
 
 jobs:
   build-and-publish-latest:
-    # if: ${{ github.event.label.name == 'rebuild container image' }}
+    if: |
+      always() &&
+      contains(github.event.pull_request.labels.*.name, 'rebuild container image') &&
+      (github.ref != 'refs/heads/main' || github.ref != 'refs/heads/master')
     runs-on: ubuntu-latest
-    # Running this job only for master branch
-    # if: github.ref == 'refs/heads/main'
-
     steps:
       # Checking out the repo
       - uses: actions/checkout@v3
@@ -47,6 +47,11 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
   run-run-dot-sh:
+    needs: build-and-publish-latest
+    if: |
+      always() &&
+      (github.ref != 'refs/heads/main' || github.ref != 'refs/heads/master') &&
+      (needs.build-and-publish-latest.result == 'success' || needs.build-and-publish-latest.result == 'skipped')
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
@@ -78,6 +83,10 @@ jobs:
         run: ./run.sh
 
   packer-build:
+    needs: run-run-dot-sh
+    if: |
+      always() &&
+      (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped')
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
