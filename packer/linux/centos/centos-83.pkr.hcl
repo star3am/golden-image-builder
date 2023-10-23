@@ -42,9 +42,9 @@ source "amazon-ebs" "centos-83" {
       architecture = "x86_64"
     }
   }
-  access_key    = "${var.aws_access_key}"
-  secret_key    = "${var.aws_secret_key}"
-  region        = "${var.aws_region}"
+  // access_key    = "${var.aws_access_key}"
+  // secret_key    = "${var.aws_secret_key}"
+  // region        = "${var.aws_region}"
   instance_type = "${var.aws_instance_type}"
   ssh_username  = "centos"
   ami_name      = "centos-83-${local.version_number}"

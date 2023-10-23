@@ -40,9 +40,9 @@ source "azure-arm" "windows-2022" {
 
 source "amazon-ebs" "windows-2022" {
   force_deregister = true
-  access_key       = "${var.aws_access_key}"
-  secret_key       = "${var.aws_secret_key}"
-  region           = "${var.aws_region}"
+  // access_key       = "${var.aws_access_key}"
+  // secret_key       = "${var.aws_secret_key}"
+  // region           = "${var.aws_region}"
   ami_name         = "windows-2022-${local.version_number}"
   instance_type    = "${var.aws_instance_type}"
   user_data_file   = "./packer/windows/windowsserver/scripts/bootstrap.txt"

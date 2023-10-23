@@ -42,9 +42,9 @@ source "amazon-ebs" "ubuntu-2004" {
     owners      = ["099720109477"]
     most_recent = true
   }
-  access_key    = "${var.aws_access_key}"
-  secret_key    = "${var.aws_secret_key}"
-  region        = "${var.aws_region}"
+  // access_key    = "${var.aws_access_key}"
+  // secret_key    = "${var.aws_secret_key}"
+  // region        = "${var.aws_region}"
   instance_type = "${var.aws_instance_type}"
   ssh_username  = "ubuntu"
   ami_name      = "ubuntu-2004-${local.version_number}"
