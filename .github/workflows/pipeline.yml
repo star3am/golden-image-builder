@@ -105,7 +105,8 @@ jobs:
       - name: Packer version
         run: packer -v
 
+      - name: Packer init
+        run: packer init
+
       - name: Packer build
         run: packer build -force -only='amazon-ebs.*' packer/all
-
-# TODO: Add packer, terraform step
