@@ -3,31 +3,6 @@
 # https://www.packer.io/
 #
 
-packer {
-  required_plugins {
-    vagrant = {
-      source  = "github.com/hashicorp/vagrant"
-      version = "~> 1"
-    }
-    azure = {
-      source  = "github.com/hashicorp/azure"
-      version = "~> 1"
-    }
-    amazon = {
-      source  = "github.com/hashicorp/amazon"
-      version = "~> 1"
-    }
-    googlecompute = {
-      source  = "github.com/hashicorp/googlecompute"
-      version = "~> 1"
-    }
-    ansible = {
-      source  = "github.com/hashicorp/ansible"
-      version = "~> 1"
-    }
-  }
-}
-
 # source blocks are generated from your builders; a source can be referenced in
 # build blocks. A build block runs provisioner and post-processors on a
 # source. Read the documentation for source blocks here:
