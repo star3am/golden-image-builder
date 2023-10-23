@@ -97,7 +97,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Ansible version
-        run: ansible -version
+        run: ansible --version
 
       - name: Ansible Galaxy install roles
         run: ansible-galaxy install -f -r ansible/roles/requirements.yml -p ansible/roles/
