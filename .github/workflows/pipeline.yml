@@ -77,4 +77,26 @@ jobs:
       - name: Run
         run: ./run.sh
 
+  packer-build:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
+      options: --user 1001
+
+    steps:
+      # Checking out the repo
+      - uses: actions/checkout@v3
+
+      - name: Ansible version
+        run: ansible -version
+
+      - name: Ansible Galaxy install roles
+        run: ansible-galaxy install -f -r ansible/roles/requirements.yml -p ansible/roles/
+
+      - name: Packer version
+        run: packer -v
+
+      - name: Packer build
+        run: packer build -force -only='amazon-ebs.*' packer/all
+
 # TODO: Add packer, terraform step
