@@ -36,9 +36,9 @@ source "azure-arm" "centos-83" {
 source "amazon-ebs" "centos-83" {
   source_ami_filter {
     most_recent = true
-    owners      = ["amazon", "aws-marketplace", "self", "374168611083"]
+    owners      = ["amazon", "aws-marketplace", "self", "125523088429"]
     filters = {
-      name         = "*CentOS_8*"
+      name         = "CentOS Stream 8*"
       architecture = "x86_64"
     }
   }

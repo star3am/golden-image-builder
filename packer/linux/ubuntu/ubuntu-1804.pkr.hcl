@@ -96,9 +96,6 @@ build {
       #"-v",
       "--extra-vars", "ansible_become=true version_number=${local.version_number}"
     ]
-    ansible_ssh_extra_args = [
-      "-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-    ]
     host_alias    = "none"
     playbook_file = "./ansible/roles/ansible-role-example-role/site.yml"
   }
@@ -121,9 +118,6 @@ build {
     extra_arguments = [
       #"-v",
       "--extra-vars", "system_is_ec2=true"
-    ]
-    ansible_ssh_extra_args = [
-      "-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
     ]
     host_alias    = "none"
     playbook_file = "./ansible/roles/UBUNTU18-CIS/site.yml"
