@@ -96,9 +96,6 @@ build {
       "--tags", "always,day0",
       "--extra-vars", "ansible_become=true version_number=${local.version_number}"
     ]
-    ansible_ssh_extra_args = [
-      "-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-    ]
     host_alias    = "none"
     playbook_file = "./ansible/roles/ansible-role-example-role/site.yml"
   }
@@ -110,9 +107,6 @@ build {
       #"-v",
       "--extra-vars", "foo=bar"
     ]
-    ansible_ssh_extra_args = [
-      "-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-    ]
     host_alias    = "none"
     playbook_file = "./ansible/roles/UBUNTU20-CIS/site.yml"
     only          = ["vagrant.ubuntu-2004", "azure-arm.ubuntu-2004", "googlecompute.ubuntu-2004"]
@@ -123,9 +117,6 @@ build {
     extra_arguments = [
       #"-v",
       "--extra-vars", "foo=bar"
-    ]
-    ansible_ssh_extra_args = [
-      "-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
     ]
     host_alias    = "none"
     playbook_file = "./ansible/roles/UBUNTU20-CIS/site.yml"

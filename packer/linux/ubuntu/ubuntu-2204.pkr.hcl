@@ -96,9 +96,6 @@ build {
       "--tags", "always,day0",
       "--extra-vars", "ansible_become=true version_number=${local.version_number}"
     ]
-    ansible_ssh_extra_args = [
-      "-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-    ]
     host_alias    = "none"
     playbook_file = "./ansible/roles/ansible-role-example-role/site.yml"
   }
@@ -109,9 +106,6 @@ build {
     extra_arguments = [
       #"-v",
       "--extra-vars", "foo=bar"
-    ]
-    ansible_ssh_extra_args = [
-      "-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
     ]
     host_alias    = "none"
     playbook_file = "./ansible/roles/UBUNTU22-CIS/site.yml"
@@ -124,9 +118,6 @@ build {
     extra_arguments = [
       #"-v",
       "--extra-vars", "foo=bar"
-    ]
-    ansible_ssh_extra_args = [
-      "-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
     ]
     host_alias    = "none"
     playbook_file = "./ansible/roles/UBUNTU22-CIS/site.yml"

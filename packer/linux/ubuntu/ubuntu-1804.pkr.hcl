@@ -110,9 +110,6 @@ build {
       #"-v",
       "--extra-vars", "foo=bar"
     ]
-    ansible_ssh_extra_args = [
-      "-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-    ]
     host_alias    = "none"
     playbook_file = "./ansible/roles/UBUNTU18-CIS/site.yml"
     only          = ["vagrant.ubuntu-1804", "azure-arm.ubuntu-1804", "googlecompute.ubuntu-1804"]
