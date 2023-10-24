@@ -1,0 +1,1 @@
+../linux/redhat/redhat-84.pkr.hcl
