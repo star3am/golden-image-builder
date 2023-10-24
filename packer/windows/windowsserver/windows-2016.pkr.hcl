@@ -118,24 +118,24 @@ build {
     only          = ["vagrant.windows-2016"]
   }
 
-  provisioner "ansible" {
-    command   = "./packer/scripts/ansible.sh"
-    user      = "${build.User}"
-    use_proxy = false
-    ansible_env_vars = [
-      "ANSIBLE_HOST_KEY_CHECKING=False",
-      "ANSIBLE_SSH_ARGS='-o ForwardAgent=yes -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'",
-      "ANSIBLE_NOCOLOR=True"
-    ]
-    extra_arguments = [
-      #"-v",
-      "--extra-vars",
-      "ansible_ssh_pass=${build.User} version_number=${local.version_number} ansible_shell_type=cmd ansible_shell_executable=None rule_2_3_1_5=false win_skip_for_test=true rule_2_3_1_1=false"
-    ]
-    host_alias    = "none"
-    playbook_file = "./ansible/roles/Windows-2016-CIS/site.yml"
-    only          = ["vagrant.windows-2016"]
-  }
+  // provisioner "ansible" {
+  //   command   = "./packer/scripts/ansible.sh"
+  //   user      = "${build.User}"
+  //   use_proxy = false
+  //   ansible_env_vars = [
+  //     "ANSIBLE_HOST_KEY_CHECKING=False",
+  //     "ANSIBLE_SSH_ARGS='-o ForwardAgent=yes -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'",
+  //     "ANSIBLE_NOCOLOR=True"
+  //   ]
+  //   extra_arguments = [
+  //     #"-v",
+  //     "--extra-vars",
+  //     "ansible_ssh_pass=${build.User} version_number=${local.version_number} ansible_shell_type=cmd ansible_shell_executable=None rule_2_3_1_5=false win_skip_for_test=true rule_2_3_1_1=false"
+  //   ]
+  //   host_alias    = "none"
+  //   playbook_file = "./ansible/roles/Windows-2016-CIS/site.yml"
+  //   only          = ["vagrant.windows-2016"]
+  // }
 
   provisioner "powershell" {
     script = "./packer/windows/windowsserver/scripts/ConfigureRemotingForAnsible.ps1"
@@ -156,19 +156,19 @@ build {
     only          = ["amazon-ebs.windows-2016", "googlecompute.windows-2016", "azure-arm.windows-2016"]
   }
 
-  provisioner "ansible" {
-    command   = "./packer/scripts/ansible.sh"
-    user      = "${build.User}"
-    use_proxy = false
-    extra_arguments = [
-      #"-v",
-      "--extra-vars",
-      "ansible_winrm_server_cert_validation=ignore ansible_connection=winrm ansible_shell_type=powershell ansible_shell_executable=None ansible_user=${build.User} section01_patch=true section02_patch=false section09_patch=true section17_patch=true section18_patch=false section19_patch=false rule_2_3_1_5=false rule_2_3_1_6=false"
-    ]
-    host_alias    = "none"
-    playbook_file = "./ansible/roles/Windows-2016-CIS/site.yml"
-    only          = ["amazon-ebs.windows-2016", "googlecompute.windows-2016", "azure-arm.windows-2016"]
-  }
+  // provisioner "ansible" {
+  //   command   = "./packer/scripts/ansible.sh"
+  //   user      = "${build.User}"
+  //   use_proxy = false
+  //   extra_arguments = [
+  //     #"-v",
+  //     "--extra-vars",
+  //     "ansible_winrm_server_cert_validation=ignore ansible_connection=winrm ansible_shell_type=powershell ansible_shell_executable=None ansible_user=${build.User} section01_patch=true section02_patch=false section09_patch=true section17_patch=true section18_patch=false section19_patch=false rule_2_3_1_5=false rule_2_3_1_6=false"
+  //   ]
+  //   host_alias    = "none"
+  //   playbook_file = "./ansible/roles/Windows-2016-CIS/site.yml"
+  //   only          = ["amazon-ebs.windows-2016", "googlecompute.windows-2016", "azure-arm.windows-2016"]
+  // }
 
   provisioner "shell-local" {
     inline = ["curl -s https://api.ipify.org/?format=none"]

@@ -100,28 +100,28 @@ build {
     playbook_file = "./ansible/roles/ansible-role-example-role/site.yml"
   }
 
-  provisioner "ansible" {
-    command = "./packer/scripts/ansible.sh"
-    user    = "${build.User}"
-    extra_arguments = [
-      #"-v",
-      "--extra-vars", "foo=bar"
-    ]
-    host_alias    = "none"
-    playbook_file = "./ansible/roles/UBUNTU20-CIS/site.yml"
-    only          = ["vagrant.ubuntu-2004", "azure-arm.ubuntu-2004", "googlecompute.ubuntu-2004"]
-  }
+  // provisioner "ansible" {
+  //   command = "./packer/scripts/ansible.sh"
+  //   user    = "${build.User}"
+  //   extra_arguments = [
+  //     #"-v",
+  //     "--extra-vars", "foo=bar"
+  //   ]
+  //   host_alias    = "none"
+  //   playbook_file = "./ansible/roles/UBUNTU20-CIS/site.yml"
+  //   only          = ["vagrant.ubuntu-2004", "azure-arm.ubuntu-2004", "googlecompute.ubuntu-2004"]
+  // }
 
-  provisioner "ansible" {
-    command = "./packer/scripts/ansible.sh"
-    extra_arguments = [
-      #"-v",
-      "--extra-vars", "foo=bar"
-    ]
-    host_alias    = "none"
-    playbook_file = "./ansible/roles/UBUNTU20-CIS/site.yml"
-    only          = ["amazon-ebs.ubuntu-2004"]
-  }
+  // provisioner "ansible" {
+  //   command = "./packer/scripts/ansible.sh"
+  //   extra_arguments = [
+  //     #"-v",
+  //     "--extra-vars", "foo=bar"
+  //   ]
+  //   host_alias    = "none"
+  //   playbook_file = "./ansible/roles/UBUNTU20-CIS/site.yml"
+  //   only          = ["amazon-ebs.ubuntu-2004"]
+  // }
 
   provisioner "shell-local" {
     inline = ["curl -s https://api.ipify.org/?format=none"]

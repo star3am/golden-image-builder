@@ -99,18 +99,18 @@ build {
     playbook_file = "./ansible/roles/ansible-role-example-role/site.yml"
   }
 
-  provisioner "ansible" {
-    command = "./packer/scripts/ansible.sh"
-    # https://www.packer.io/docs/provisioners/ansible/ansible#redhat-centos
-    sftp_command = "/usr/libexec/openssh/sftp-server -e"
-    extra_arguments = [
-      #"-v",
-      "--extra-vars",
-      "disable_epel_repo=false rhel8cis_selinux_state=permissive system_is_ec2=true rhel8cis_rule_1_2_5=false rhel8cis_rule_6_2_12=false"
-    ]
-    host_alias    = "none"
-    playbook_file = "./ansible/roles/RHEL8-CIS/site.yml"
-  }
+  // provisioner "ansible" {
+  //   command = "./packer/scripts/ansible.sh"
+  //   # https://www.packer.io/docs/provisioners/ansible/ansible#redhat-centos
+  //   sftp_command = "/usr/libexec/openssh/sftp-server -e"
+  //   extra_arguments = [
+  //     #"-v",
+  //     "--extra-vars",
+  //     "disable_epel_repo=false rhel8cis_selinux_state=permissive system_is_ec2=true rhel8cis_rule_1_2_5=false rhel8cis_rule_6_2_12=false"
+  //   ]
+  //   host_alias    = "none"
+  //   playbook_file = "./ansible/roles/RHEL8-CIS/site.yml"
+  // }
 
   provisioner "shell-local" {
     inline = ["curl -s https://api.ipify.org/?format=none"]
