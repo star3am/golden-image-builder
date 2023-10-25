@@ -13,144 +13,144 @@ env:
   CONFIG_DIRECTORY: "./"
 
 jobs:
-  build-and-publish-latest:
-    if: |
-      always() &&
-      contains(github.event.pull_request.labels.*.name, 'rebuild container image') &&
-      (github.ref != 'refs/heads/main' || github.ref != 'refs/heads/master')
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+  # build-and-publish-latest:
+  #   if: |
+  #     always() &&
+  #     contains(github.event.pull_request.labels.*.name, 'rebuild container image') &&
+  #     (github.ref != 'refs/heads/main' || github.ref != 'refs/heads/master')
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      # https://github.com/docker/setup-qemu-action
-      # https://blog.thesparktree.com/docker-multi-arch-github-actions
-      - name: Setup QEMU
-        uses: docker/setup-qemu-action@v2
-        with:
-          platforms: 'arm64,amd64'
+  #     # https://github.com/docker/setup-qemu-action
+  #     # https://blog.thesparktree.com/docker-multi-arch-github-actions
+  #     - name: Setup QEMU
+  #       uses: docker/setup-qemu-action@v2
+  #       with:
+  #         platforms: 'arm64,amd64'
 
-      # https://github.com/docker/setup-buildx-action
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+  #     # https://github.com/docker/setup-buildx-action
+  #     - name: Set up Docker Buildx
+  #       uses: docker/setup-buildx-action@v2
 
-      # https://github.com/marketplace/actions/docker-build-push-action
-      - uses: mr-smithers-excellent/docker-build-push@v6
-        name: Build and Push Docker image
-        with:
-          image: golden-image-builder-container
-          tags: latest
-          registry: ghcr.io
-          multiPlatform: true
-          platform: linux/amd64,linux/arm64
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+  #     # https://github.com/marketplace/actions/docker-build-push-action
+  #     - uses: mr-smithers-excellent/docker-build-push@v6
+  #       name: Build and Push Docker image
+  #       with:
+  #         image: golden-image-builder-container
+  #         tags: latest
+  #         registry: ghcr.io
+  #         multiPlatform: true
+  #         platform: linux/amd64,linux/arm64
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.GITHUB_TOKEN }}
 
-  run-run-dot-sh:
-    needs: build-and-publish-latest
-    if: |
-      always() &&
-      (github.ref != 'refs/heads/main' || github.ref != 'refs/heads/master') &&
-      (needs.build-and-publish-latest.result == 'success' || needs.build-and-publish-latest.result == 'skipped')
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
-      options: --user 1001
+  # run-run-dot-sh:
+  #   needs: build-and-publish-latest
+  #   if: |
+  #     always() &&
+  #     (github.ref != 'refs/heads/main' || github.ref != 'refs/heads/master') &&
+  #     (needs.build-and-publish-latest.result == 'success' || needs.build-and-publish-latest.result == 'skipped')
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
+  #     options: --user 1001
 
-    steps:
-      - uses: actions/checkout@v3
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - name: Packer version
-        run: packer -v
+  #     - name: Packer version
+  #       run: packer -v
 
-      - name: Ansible version
-        run: ansible --version
+  #     - name: Ansible version
+  #       run: ansible --version
 
-      - name: Terraform version
-        run: terraform -v
+  #     - name: Terraform version
+  #       run: terraform -v
 
-      - name: Copy /home/ubuntu/.tflint.d to /github/home/
-        run: cp -r /home/ubuntu/.tflint.d /github/home/
+  #     - name: Copy /home/ubuntu/.tflint.d to /github/home/
+  #       run: cp -r /home/ubuntu/.tflint.d /github/home/
 
-      - name: Install Pre Commit
-        run: python3 -m pip install --no-cache-dir --quiet --upgrade --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org git+https://github.com/pre-commit/pre-commit.git@v2.20.0
+  #     - name: Install Pre Commit
+  #       run: python3 -m pip install --no-cache-dir --quiet --upgrade --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org git+https://github.com/pre-commit/pre-commit.git@v2.20.0
 
-      - name: cd GITHUB_WORKSPACE
-        run: cd $GITHUB_WORKSPACE
+  #     - name: cd GITHUB_WORKSPACE
+  #       run: cd $GITHUB_WORKSPACE
 
-      - name: Run
-        run: ./run.sh
+  #     - name: Run
+  #       run: ./run.sh
 
-  azure-image-gallery:
-    needs: run-run-dot-sh
-    if: |
-      always() &&
-      (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped')
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
-      options: --user 1001
+  # azure-image-gallery:
+  #   needs: run-run-dot-sh
+  #   if: |
+  #     always() &&
+  #     (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped')
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
+  #     options: --user 1001
 
-    steps:
-      - uses: actions/checkout@v3
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - name: Terraform version
-        run: terraform -v
+  #     - name: Terraform version
+  #       run: terraform -v
 
-      - name: Upload Configuration
-        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
-        id: plan-upload
-        with:
-          workspace: ${{ env.TF_WORKSPACE }}
-          directory: ${{ env.CONFIG_DIRECTORY }}
-          speculative: true
-        env:
-          CONFIG_DIRECTORY: "./terraform/azure-shared-image-gallery"
+  #     - name: Upload Configuration
+  #       uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
+  #       id: plan-upload
+  #       with:
+  #         workspace: ${{ env.TF_WORKSPACE }}
+  #         directory: ${{ env.CONFIG_DIRECTORY }}
+  #         speculative: true
+  #       env:
+  #         CONFIG_DIRECTORY: "./terraform/azure-shared-image-gallery"
 
-      - name: Create Plan Run
-        uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
-        id: plan-run
-        with:
-          workspace: ${{ env.TF_WORKSPACE }}
-          configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
-          plan_only: true
-        env:
-          CONFIG_DIRECTORY: "./terraform/azure-shared-image-gallery"
+  #     - name: Create Plan Run
+  #       uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
+  #       id: plan-run
+  #       with:
+  #         workspace: ${{ env.TF_WORKSPACE }}
+  #         configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
+  #         plan_only: true
+  #       env:
+  #         CONFIG_DIRECTORY: "./terraform/azure-shared-image-gallery"
 
-      - name: Get Plan Output
-        uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.0
-        id: plan-output
-        with:
-          plan: ${{ fromJSON(steps.plan-run.outputs.payload).data.relationships.plan.data.id }}
-        env:
-          CONFIG_DIRECTORY: "./terraform/azure-shared-image-gallery"
+  #     - name: Get Plan Output
+  #       uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.0
+  #       id: plan-output
+  #       with:
+  #         plan: ${{ fromJSON(steps.plan-run.outputs.payload).data.relationships.plan.data.id }}
+  #       env:
+  #         CONFIG_DIRECTORY: "./terraform/azure-shared-image-gallery"
 
-      - name: Upload Configuration
-        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.4
-        id: upload
-        with:
-          workspace: ${{ env.TF_WORKSPACE }}
-          directory: "./terraform/azure-shared-image-gallery"
+  #     - name: Upload Configuration
+  #       uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.4
+  #       id: upload
+  #       with:
+  #         workspace: ${{ env.TF_WORKSPACE }}
+  #         directory: "./terraform/azure-shared-image-gallery"
 
-      - name: Create Run
-        uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.4
-        id: create-run
-        with:
-          workspace: ${{ env.TF_WORKSPACE }}
-          configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
+  #     - name: Create Run
+  #       uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.4
+  #       id: create-run
+  #       with:
+  #         workspace: ${{ env.TF_WORKSPACE }}
+  #         configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
 
-      - name: Apply Run
-        uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.0.4
-        # assign id attribute to reference in subsequent steps
-        id: apply
-        with:
-          run: ${{ steps.create-run.outputs.run_id }}
-          comment: "Confirmed from GitHub Actions CI"
+  #     - name: Apply Run
+  #       uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.0.4
+  #       # assign id attribute to reference in subsequent steps
+  #       id: apply
+  #       with:
+  #         run: ${{ steps.create-run.outputs.run_id }}
+  #         comment: "Confirmed from GitHub Actions CI"
 
   packer-build:
-    needs: azure-image-gallery
-    if: |
-      always() &&
-      (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped')
+    # needs: azure-image-gallery
+    # if: |
+    #   always() &&
+    #   (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped')
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
@@ -175,7 +175,7 @@ jobs:
       - name: Packer build
         # https://developer.hashicorp.com/packer/docs/templates/hcl_templates/onlyexcept
         # run: packer build -force -except='vagrant.*' packer/all
-        run: packer build -force -only='googlecompute.centos-79' -except='vagrant*' packer/all
+        run: packer build -force -only='googlecompute.centos-79' packer/all
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}

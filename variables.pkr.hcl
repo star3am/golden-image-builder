@@ -144,7 +144,7 @@ variable "azure_region" {
 
 variable "gcp_account_file" {
   type    = string
-  default = "${env("GCP_ACCOUNT_FILE")}"
+  default = "${env("GOOGLE_CREDENTIALS")}"
 }
 
 variable "gcp_project_id" {
