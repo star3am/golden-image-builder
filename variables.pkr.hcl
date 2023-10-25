@@ -149,7 +149,7 @@ variable "gcp_account_file" {
 
 variable "gcp_project_id" {
   type    = string
-  default = "${env("GCP_PROJECT_ID")}"
+  default = "riaan-nolan-368709"
 }
 
 variable "gcp_zone" {
