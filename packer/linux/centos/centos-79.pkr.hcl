@@ -8,10 +8,10 @@
 # source. Read the documentation for source blocks here:
 # https://www.packer.io/docs/templates/hcl_templates/blocks/source
 source "azure-arm" "centos-79" {
-  client_id     = "${var.azure_client_id}"
-  client_secret = "${var.azure_client_secret}"
-  #tenant_id                         = "${var.azure_tenant_id}"
-  subscription_id                   = "${var.azure_subscription_id}"
+  // client_id     = "${var.azure_client_id}"
+  // client_secret = "${var.azure_client_secret}"
+  // #tenant_id                         = "${var.azure_tenant_id}"
+  // subscription_id                   = "${var.azure_subscription_id}"
   image_offer                       = "CentOS-LVM"
   image_publisher                   = "OpenLogic"
   image_sku                         = "7-lvm-gen2"
@@ -54,8 +54,8 @@ source "amazon-ebs" "centos-79" {
 }
 
 source "googlecompute" "centos-79" {
-  project_id          = "${var.gcp_project_id}"
-  account_file        = "${var.gcp_account_file}"
+  // project_id          = "${var.gcp_project_id}"
+  // account_file        = "${var.gcp_account_file}"
   disk_size           = "${var.disk_size}"
   image_name          = "centos-79-${local.version_number}"
   source_image_family = "centos-7"
