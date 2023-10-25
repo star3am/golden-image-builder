@@ -54,7 +54,7 @@ source "amazon-ebs" "centos-79" {
 }
 
 source "googlecompute" "centos-79" {
-  // project_id          = "${var.gcp_project_id}"
+  project_id          = "${var.gcp_project_id}"
   // account_file        = "${var.gcp_account_file}"
   disk_size           = "${var.disk_size}"
   image_name          = "centos-79-${local.version_number}"
