@@ -59,7 +59,7 @@ source "googlecompute" "centos-79" {
   disk_size           = "${var.disk_size}"
   image_name          = "centos-79-${local.version_number}"
   source_image_family = "centos-7"
-  ssh_username        = "packer"
+  // ssh_username        = "packer"
   zone                = "${var.gcp_zone}"
   image_labels = {
     vm_name = "centos-79"
