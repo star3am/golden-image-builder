@@ -12,6 +12,20 @@ resource "azurerm_shared_image_gallery" "sig" {
   description         = "Shared Image Gallery"
 }
 
+resource "azurerm_shared_image" "ubuntu2204" {
+  name                = "ubuntu-2204"
+  gallery_name        = azurerm_shared_image_gallery.sig.name
+  resource_group_name = var.resource_group
+  location            = var.location
+  os_type             = "Linux"
+  hyper_v_generation  = "V2"
+  identifier {
+    publisher = var.custom_image_publisher
+    offer     = "ubuntu-com-server-jammy"
+    sku       = "22_04-lts-gen2"
+  }
+}
+
 resource "azurerm_shared_image" "ubuntu2004" {
   name                = "ubuntu-2004"
   gallery_name        = azurerm_shared_image_gallery.sig.name
@@ -83,7 +97,7 @@ resource "azurerm_shared_image" "redhat79" {
 }
 
 resource "azurerm_shared_image" "redhat83" {
-  name                = "redhat-83"
+  name                = "redhat-84"
   gallery_name        = azurerm_shared_image_gallery.sig.name
   resource_group_name = var.resource_group
   location            = var.location
@@ -91,8 +105,22 @@ resource "azurerm_shared_image" "redhat83" {
   hyper_v_generation  = "V2"
   identifier {
     publisher = var.custom_image_publisher
-    offer     = "redhat-com-server-83"
-    sku       = "redhat-83"
+    offer     = "redhat-com-server-84"
+    sku       = "redhat-84"
+  }
+}
+
+resource "azurerm_shared_image" "windows2022" {
+  name                = "windows-2022"
+  gallery_name        = azurerm_shared_image_gallery.sig.name
+  resource_group_name = var.resource_group
+  location            = var.location
+  os_type             = "Windows"
+  hyper_v_generation  = "V1"
+  identifier {
+    publisher = var.custom_image_publisher
+    offer     = "microsoft-com-server-2022"
+    sku       = "windows-2022"
   }
 }
 
