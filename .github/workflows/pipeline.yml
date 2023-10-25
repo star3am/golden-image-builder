@@ -109,7 +109,7 @@ jobs:
         run: packer init -upgrade packer/all
 
       - name: Packer build
-        run: packer build -force -only='amazon-ebs.*' packer/all
+        run: packer build -force -except='vagrant.*' packer/all
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
