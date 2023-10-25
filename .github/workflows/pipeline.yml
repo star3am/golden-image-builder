@@ -175,7 +175,7 @@ jobs:
       - name: Packer build
         # https://developer.hashicorp.com/packer/docs/templates/hcl_templates/onlyexcept
         # run: packer build -force -except='vagrant.*' packer/all
-        run: packer build -debug -force -only='googlecompute.ubuntu-2204' packer/all
+        run: PACKER_LOG=1 packer build -debug -force -only='googlecompute.ubuntu-2204' packer/all
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
