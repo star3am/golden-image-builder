@@ -113,12 +113,12 @@ variable "aws_source_ami_ubuntu-2004" {
 
 variable "azure_client_id" {
   type    = string
-  default = "${env("AZURE_CLIENT_ID")}"
+  default = "${env("ARM_CLIENT_ID")}"
 }
 
 variable "azure_client_secret" {
   type      = string
-  default   = "${env("AZURE_CLIENT_SECRET")}"
+  default   = "${env("ARM_CLIENT_SECRET")}"
   sensitive = true
 }
 
@@ -134,17 +134,22 @@ variable "azure_shared_image_gallery" {
 
 variable "azure_subscription_id" {
   type    = string
-  default = "${env("AZURE_SUBSCRIPTION_ID")}"
+  default = "${env("ARM_SUBSCRIPTION_ID")}"
 }
 
 variable "azure_tenant_id" {
   type    = string
-  default = "${env("AZURE_TENANT_ID")}"
+  default = "${env("ARM_TENANT_ID")}"
 }
 
 variable "azure_region" {
   type    = string
   default = "Australia East"
+}
+
+variable "azure_instance_type" {
+  type = string
+  default = "Standard_DS2_v2"
 }
 
 variable "gcp_account_file" {

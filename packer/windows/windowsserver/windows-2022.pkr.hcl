@@ -11,7 +11,7 @@ source "azure-arm" "windows-2022" {
   skip_create_image = "${var.skip_create_image}"
   client_id     = "${var.azure_client_id}"
   client_secret = "${var.azure_client_secret}"
-  #tenant_id                         = "${var.azure_tenant_id}"
+  tenant_id                         = "${var.azure_tenant_id}"
   subscription_id                   = "${var.azure_subscription_id}"
   image_offer                       = "WindowsServer"
   image_publisher                   = "MicrosoftWindowsServer"
@@ -21,7 +21,7 @@ source "azure-arm" "windows-2022" {
   location                          = "${var.azure_region}"
   managed_image_resource_group_name = "resourcegroup"
   os_type                           = "windows"
-  vm_size                           = "Standard_DS2_v2"
+  vm_size                           = "${var.azure_instance_type}"
   communicator                      = "winrm"
   winrm_username                    = "packer_user"
   winrm_insecure                    = true

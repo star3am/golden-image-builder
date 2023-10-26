@@ -9,10 +9,10 @@
 # https://www.packer.io/docs/templates/hcl_templates/blocks/source
 source "azure-arm" "centos-79" {
   skip_create_image = "${var.skip_create_image}"
-  // client_id     = "${var.azure_client_id}"
-  // client_secret = "${var.azure_client_secret}"
-  // #tenant_id                         = "${var.azure_tenant_id}"
-  // subscription_id                   = "${var.azure_subscription_id}"
+  client_id     = "${var.azure_client_id}"
+  client_secret = "${var.azure_client_secret}"
+  tenant_id                         = "${var.azure_tenant_id}"
+  subscription_id                   = "${var.azure_subscription_id}"
   image_offer                       = "CentOS-LVM"
   image_publisher                   = "OpenLogic"
   image_sku                         = "7-lvm-gen2"
@@ -21,7 +21,7 @@ source "azure-arm" "centos-79" {
   location                          = "${var.azure_region}"
   managed_image_resource_group_name = "resourcegroup"
   os_type                           = "linux"
-  vm_size                           = "Standard_DS2_v2"
+  vm_size                           = "${var.azure_instance_type}"
   shared_image_gallery_destination {
     gallery_name        = "SharedImageGallery"
     image_name          = "centos-79"
