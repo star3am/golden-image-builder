@@ -8,6 +8,7 @@
 # source. Read the documentation for source blocks here:
 # https://www.packer.io/docs/templates/hcl_templates/blocks/source
 source "azure-arm" "centos-79" {
+  skip_create_image = "${var.skip_create_image}"
   // client_id     = "${var.azure_client_id}"
   // client_secret = "${var.azure_client_secret}"
   // #tenant_id                         = "${var.azure_tenant_id}"
@@ -42,6 +43,7 @@ source "amazon-ebs" "centos-79" {
       architecture = "x86_64"
     }
   }
+  skip_create_ami = "${var.skip_create_image}"
   // access_key    = "${var.aws_access_key}"
   // secret_key    = "${var.aws_secret_key}"
   // region        = "${var.aws_region}"
@@ -54,6 +56,7 @@ source "amazon-ebs" "centos-79" {
 }
 
 source "googlecompute" "centos-79" {
+  skip_create_image = "${var.skip_create_image}"
   project_id          = "${var.gcp_project_id}"
   account_file        = "${var.gcp_account_file}"
   disk_size           = "${var.disk_size}"

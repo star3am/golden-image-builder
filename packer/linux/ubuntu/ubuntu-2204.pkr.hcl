@@ -8,6 +8,7 @@
 # source. Read the documentation for source blocks here:
 # https://www.packer.io/docs/templates/hcl_templates/blocks/source
 source "azure-arm" "ubuntu-2204" {
+  skip_create_image = "${var.skip_create_image}"
   client_id     = "${var.azure_client_id}"
   client_secret = "${var.azure_client_secret}"
   #tenant_id                        = "${var.azure_tenant_id}"
@@ -42,6 +43,7 @@ source "amazon-ebs" "ubuntu-2204" {
     owners      = ["099720109477"]
     most_recent = true
   }
+  skip_create_ami = "${var.skip_create_image}"
   // access_key    = "${var.aws_access_key}"
   // secret_key    = "${var.aws_secret_key}"
   // region        = "${var.aws_region}"
@@ -54,17 +56,20 @@ source "amazon-ebs" "ubuntu-2204" {
 }
 
 source "googlecompute" "ubuntu-2204" {
+  skip_create_image = "${var.skip_create_image}"
   project_id          = "${var.gcp_project_id}"
   account_file        = "${var.gcp_account_file}"
   disk_size           = "${var.disk_size}"
   image_name          = "ubuntu-2204-${local.version_number}"
   source_image_family = "ubuntu-2204-lts"
   ssh_username        = "packer"
+  use_os_login        = "false"
   zone                = "${var.gcp_zone}"
   image_labels = {
     vm_name = "ubuntu-2204"
   }
   image_family = "soe-ubuntu-2204-lts"
+  tags = ["packer"]
 }
 
 source "vagrant" "ubuntu-2204" {
