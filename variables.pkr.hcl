@@ -10,6 +10,11 @@ locals {
 }
 
 # variables
+variable "skip_create_image" {
+  type = bool
+  default = false
+}
+
 variable "build_directory" {
   type    = string
   default = "./output"
