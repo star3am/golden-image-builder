@@ -60,7 +60,6 @@ source "googlecompute" "ubuntu-2204" {
   image_name          = "ubuntu-2204-${local.version_number}"
   source_image_family = "ubuntu-2204-lts"
   ssh_username        = "packer"
-  wait_to_add_ssh_keys = "60s"
   zone                = "${var.gcp_zone}"
   image_labels = {
     vm_name = "ubuntu-2204"
