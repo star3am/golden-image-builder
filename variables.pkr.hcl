@@ -11,7 +11,7 @@ locals {
 
 # variables
 variable "skip_create_image" {
-  type = bool
+  type    = bool
   default = true
 }
 
@@ -63,7 +63,7 @@ variable "vm_name" {
 
 variable "aws_access_key" {
   type    = string
-  default = "${env("AWS_ACCESS_KEY")}"
+  default = "${env("AWS_ACCESS_KEY_ID")}"
 }
 
 variable "aws_secret_key" {
@@ -148,7 +148,7 @@ variable "azure_region" {
 }
 
 variable "azure_instance_type" {
-  type = string
+  type    = string
   default = "Standard_DS2_v2"
 }
 

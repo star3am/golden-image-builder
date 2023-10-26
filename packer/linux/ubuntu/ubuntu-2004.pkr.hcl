@@ -8,9 +8,9 @@
 # source. Read the documentation for source blocks here:
 # https://www.packer.io/docs/templates/hcl_templates/blocks/source
 source "azure-arm" "ubuntu-2004" {
-  skip_create_image = "${var.skip_create_image}"
-  client_id     = "${var.azure_client_id}"
-  client_secret = "${var.azure_client_secret}"
+  skip_create_image                 = "${var.skip_create_image}"
+  client_id                         = "${var.azure_client_id}"
+  client_secret                     = "${var.azure_client_secret}"
   tenant_id                         = "${var.azure_tenant_id}"
   subscription_id                   = "${var.azure_subscription_id}"
   image_offer                       = "0001-com-ubuntu-server-focal"
@@ -44,19 +44,19 @@ source "amazon-ebs" "ubuntu-2004" {
     most_recent = true
   }
   skip_create_ami = "${var.skip_create_image}"
-  // access_key    = "${var.aws_access_key}"
-  // secret_key    = "${var.aws_secret_key}"
-  // region        = "${var.aws_region}"
-  instance_type = "${var.aws_instance_type}"
-  ssh_username  = "ubuntu"
-  ami_name      = "ubuntu-2004-${local.version_number}"
+  access_key      = "${var.aws_access_key}"
+  secret_key      = "${var.aws_secret_key}"
+  region          = "${var.aws_region}"
+  instance_type   = "${var.aws_instance_type}"
+  ssh_username    = "ubuntu"
+  ami_name        = "ubuntu-2004-${local.version_number}"
   tags = {
     vm_name = "ubuntu-2004"
   }
 }
 
 source "googlecompute" "ubuntu-2004" {
-  skip_create_image = "${var.skip_create_image}"
+  skip_create_image   = "${var.skip_create_image}"
   project_id          = "${var.gcp_project_id}"
   account_file        = "${var.gcp_account_file}"
   disk_size           = "${var.disk_size}"

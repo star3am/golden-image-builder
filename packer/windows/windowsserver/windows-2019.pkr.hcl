@@ -8,9 +8,9 @@
 # source. Read the documentation for source blocks here:
 # https://www.packer.io/docs/templates/hcl_templates/blocks/source
 source "azure-arm" "windows-2019" {
-  skip_create_image = "${var.skip_create_image}"
-  client_id     = "${var.azure_client_id}"
-  client_secret = "${var.azure_client_secret}"
+  skip_create_image                 = "${var.skip_create_image}"
+  client_id                         = "${var.azure_client_id}"
+  client_secret                     = "${var.azure_client_secret}"
   tenant_id                         = "${var.azure_tenant_id}"
   subscription_id                   = "${var.azure_subscription_id}"
   image_offer                       = "WindowsServer"
@@ -41,10 +41,10 @@ source "azure-arm" "windows-2019" {
 
 source "amazon-ebs" "windows-2019" {
   force_deregister = true
-  skip_create_ami = "${var.skip_create_image}"
-  // access_key       = "${var.aws_access_key}"
-  // secret_key       = "${var.aws_secret_key}"
-  // region           = "${var.aws_region}"
+  skip_create_ami  = "${var.skip_create_image}"
+  access_key       = "${var.aws_access_key}"
+  secret_key       = "${var.aws_secret_key}"
+  region           = "${var.aws_region}"
   ami_name         = "windows-2019-${local.version_number}"
   instance_type    = "${var.aws_instance_type}"
   user_data_file   = "./packer/windows/windowsserver/scripts/bootstrap.txt"
@@ -64,7 +64,7 @@ source "amazon-ebs" "windows-2019" {
 }
 
 source "googlecompute" "windows-2019" {
-  skip_create_image = "${var.skip_create_image}"
+  skip_create_image   = "${var.skip_create_image}"
   project_id          = "${var.gcp_project_id}"
   account_file        = "${var.gcp_account_file}"
   disk_size           = "${var.disk_size}"

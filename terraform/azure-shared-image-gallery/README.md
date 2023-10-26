@@ -18,8 +18,10 @@ The following resources are used by this module:
 - [azurerm_shared_image.redhat83](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image) (resource)
 - [azurerm_shared_image.ubuntu1804](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image) (resource)
 - [azurerm_shared_image.ubuntu2004](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image) (resource)
+- [azurerm_shared_image.ubuntu2204](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image) (resource)
 - [azurerm_shared_image.windows2016](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image) (resource)
 - [azurerm_shared_image.windows2019](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image) (resource)
+- [azurerm_shared_image.windows2022](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image) (resource)
 - [azurerm_shared_image_gallery.sig](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image_gallery) (resource)
 
 ## Required Inputs
