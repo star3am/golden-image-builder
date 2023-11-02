@@ -3,8 +3,8 @@
 # hhttps://github.com/marketplace/actions/build-and-publish-docker-image-to-github-container-registry
 name: "GIB - Golden Image Builder"
 
-on:
-  push:
+on: # yamllint disable-line rule:truthy
+  push: # yamllint disable-line rule:empty-values
 
 env:
   TF_CLOUD_ORGANIZATION: "nolan"
@@ -146,6 +146,72 @@ jobs:
   #         run: ${{ steps.create-run.outputs.run_id }}
   #         comment: "Confirmed from GitHub Actions CI"
 
+  awx-ansible-tower:
+    # needs: azure-image-gallery
+    # if: |
+    #   always() &&
+    #   (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped')
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
+      options: --user 1001
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Terraform version
+        run: terraform -v
+
+      - name: Upload Configuration
+        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
+        id: plan-upload
+        with:
+          workspace: ${{ env.TF_WORKSPACE }}
+          directory: ${{ env.CONFIG_DIRECTORY }}
+          speculative: true
+        env:
+          CONFIG_DIRECTORY: "./terraform/awx-ansible-tower-instance"
+
+      - name: Create Plan Run
+        uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
+        id: plan-run
+        with:
+          workspace: ${{ env.TF_WORKSPACE }}
+          configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
+          plan_only: true
+        env:
+          CONFIG_DIRECTORY: "./terraform/awx-ansible-tower-instance"
+
+      - name: Get Plan Output
+        uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.0
+        id: plan-output
+        with:
+          plan: ${{ fromJSON(steps.plan-run.outputs.payload).data.relationships.plan.data.id }}
+        env:
+          CONFIG_DIRECTORY: "./terraform/awx-ansible-tower-instance"
+
+      - name: Upload Configuration
+        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.4
+        id: upload
+        with:
+          workspace: ${{ env.TF_WORKSPACE }}
+          directory: "./terraform/awx-ansible-tower-instance"
+
+      - name: Create Run
+        uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.4
+        id: create-run
+        with:
+          workspace: ${{ env.TF_WORKSPACE }}
+          configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
+
+      - name: Apply Run
+        uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.0.4
+        # assign id attribute to reference in subsequent steps
+        id: apply
+        with:
+          run: ${{ steps.create-run.outputs.run_id }}
+          comment: "Confirmed from GitHub Actions CI"
+
   packer-build:
     # needs: azure-image-gallery
     # if: |
@@ -174,7 +240,8 @@ jobs:
 
       - name: Packer build
         # https://developer.hashicorp.com/packer/docs/templates/hcl_templates/onlyexcept
-        run: packer build -force -except='vagrant.*' packer/all
+        run: packer build -force -only='amazon-ebs.ubuntu-2204' packer/all
+        # run: packer build -force -except='vagrant.*' packer/all
         # run: PACKER_LOG=1 packer build -debug -force -only='googlecompute.ubuntu-2204' packer/all
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
