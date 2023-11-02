@@ -2,6 +2,14 @@ terraform {
   required_version = "~> 1.0"
 }
 
+provider "aws" {}
+
+provider "azurerm" {
+  features {}
+}
+
+provider "google" {}
+
 module "hashiqube" {
   source               = "star3am/hashiqube/hashicorp"
   version              = "1.0.18"
