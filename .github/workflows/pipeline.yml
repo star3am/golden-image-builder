@@ -166,47 +166,40 @@ jobs:
         uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
         id: plan-upload
         with:
-          workspace: ${{ env.TF_WORKSPACE }}
-          directory: ${{ env.CONFIG_DIRECTORY }}
+          workspace: "awx-ansible-tower"
+          directory: "./terraform/awx-ansible-tower-instance"
           speculative: true
-        env:
-          CONFIG_DIRECTORY: "./terraform/awx-ansible-tower-instance"
 
       - name: Create Plan Run
         uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
         id: plan-run
         with:
-          workspace: ${{ env.TF_WORKSPACE }}
+          workspace: "awx-ansible-tower"
           configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
           plan_only: true
-        env:
-          CONFIG_DIRECTORY: "./terraform/awx-ansible-tower-instance"
 
       - name: Get Plan Output
         uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.0
         id: plan-output
         with:
           plan: ${{ fromJSON(steps.plan-run.outputs.payload).data.relationships.plan.data.id }}
-        env:
-          CONFIG_DIRECTORY: "./terraform/awx-ansible-tower-instance"
 
       - name: Upload Configuration
         uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.4
         id: upload
         with:
-          workspace: ${{ env.TF_WORKSPACE }}
+          workspace: "awx-ansible-tower"
           directory: "./terraform/awx-ansible-tower-instance"
 
       - name: Create Run
         uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.4
         id: create-run
         with:
-          workspace: ${{ env.TF_WORKSPACE }}
+          workspace: "awx-ansible-tower"
           configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
 
       - name: Apply Run
         uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.0.4
-        # assign id attribute to reference in subsequent steps
         id: apply
         with:
           run: ${{ steps.create-run.outputs.run_id }}

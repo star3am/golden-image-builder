@@ -16,7 +16,5 @@ module "hashiqube" {
   deploy_to_aws        = true
   deploy_to_azure      = false
   deploy_to_gcp        = false
-  ssh_public_key       = ""
-  ssh_private_key      = ""
   vagrant_provisioners = "basetools,docker,minikube,ansible-tower"
 }
