@@ -3,10 +3,6 @@
 # https://www.packer.io/
 #
 
-# source blocks are generated from your builders; a source can be referenced in
-# build blocks. A build block runs provisioner and post-processors on a
-# source. Read the documentation for source blocks here:
-# https://www.packer.io/docs/templates/hcl_templates/blocks/source
 source "azure-arm" "ubuntu-2004" {
   skip_create_image                 = "${var.skip_create_image}"
   client_id                         = "${var.azure_client_id}"
@@ -67,7 +63,7 @@ source "googlecompute" "ubuntu-2004" {
   image_labels = {
     vm_name = "ubuntu-2004"
   }
-  image_family = "soe-ubuntu-2004-lts"
+  image_family = "ubuntu-2004-lts"
 }
 
 source "vagrant" "ubuntu-2004" {

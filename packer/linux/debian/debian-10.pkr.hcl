@@ -3,10 +3,6 @@
 # https://www.packer.io/
 #
 
-# source blocks are generated from your builders; a source can be referenced in
-# build blocks. A build block runs provisioner and post-processors on a
-# source. Read the documentation for source blocks here:
-# https://www.packer.io/docs/templates/hcl_templates/blocks/source
 source "azure-arm" "debian-79" {
   client_id     = "${var.azure_client_id}"
   client_secret = "${var.azure_client_secret}"
@@ -57,7 +53,7 @@ source "googlecompute" "centos-79" {
   image_labels = {
     vm_name = "${var.vm_name}"
   }
-  image_family = "soe-debain-10"
+  image_family = "debain-10"
 }
 
 source "vagrant" "centos-79" {
