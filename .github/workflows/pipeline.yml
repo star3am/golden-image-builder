@@ -212,44 +212,44 @@ jobs:
           run: ${{ steps.create-run.outputs.run_id }}
           comment: "Confirmed from GitHub Actions CI"
 
-  packer-build:
-    # needs: azure-image-gallery
-    # if: |
-    #   always() &&
-    #   (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped')
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
-      options: --user 1001
+  # packer-build:
+  #   # needs: azure-image-gallery
+  #   # if: |
+  #   #   always() &&
+  #   #   (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped')
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
+  #     options: --user 1001
 
-    steps:
-      # Checking out the repo
-      - uses: actions/checkout@v3
+  #   steps:
+  #     # Checking out the repo
+  #     - uses: actions/checkout@v3
 
-      - name: Ansible version
-        run: ansible --version
+  #     - name: Ansible version
+  #       run: ansible --version
 
-      - name: Ansible Galaxy install roles
-        run: ansible-galaxy install -f -r ansible/roles/requirements.yml -p ansible/roles/
+  #     - name: Ansible Galaxy install roles
+  #       run: ansible-galaxy install -f -r ansible/roles/requirements.yml -p ansible/roles/
 
-      - name: Packer version
-        run: packer -v
+  #     - name: Packer version
+  #       run: packer -v
 
-      - name: Packer init
-        run: packer init -upgrade packer/all
+  #     - name: Packer init
+  #       run: packer init -upgrade packer/all
 
-      - name: Packer build
-        # https://developer.hashicorp.com/packer/docs/templates/hcl_templates/onlyexcept
-        run: packer build -force -only='amazon-ebs.ubuntu-2204' packer/all
-        # run: packer build -force -except='vagrant.*' packer/all
-        # run: PACKER_LOG=1 packer build -debug -force -only='googlecompute.ubuntu-2204' packer/all
-        env:
-          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-          GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
+  #     - name: Packer build
+  #       # https://developer.hashicorp.com/packer/docs/templates/hcl_templates/onlyexcept
+  #       run: packer build -force -only='amazon-ebs.ubuntu-2204' packer/all
+  #       # run: packer build -force -except='vagrant.*' packer/all
+  #       # run: PACKER_LOG=1 packer build -debug -force -only='googlecompute.ubuntu-2204' packer/all
+  #       env:
+  #         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+  #         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+  #         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+  #         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+  #         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         AWS_REGION: ${{ secrets.AWS_REGION }}
+  #         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+  #         GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
