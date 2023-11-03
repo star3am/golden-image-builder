@@ -12,7 +12,7 @@ provider "google" {}
 
 module "hashiqube" {
   source               = "github.com/star3am/terraform-hashicorp-hashiqube?ref=master"
-  version              = "1.0.18"
+#   version              = "1.0.18"
   deploy_to_aws        = true
   deploy_to_azure      = false
   deploy_to_gcp        = false
