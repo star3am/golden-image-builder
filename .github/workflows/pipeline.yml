@@ -11,8 +11,8 @@ env:
   TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
   TF_WORKSPACE: "golden-image-builder"
   CONFIG_DIRECTORY: "./"
-  TF_VAR_ssh_public_key: "${{ secrets.TF_VAR_SSH_PUBLIC_KEY }}"
-  TF_VAR_ssh_private_key: "${{ secrets.TF_VAR_SSH_PRIVATE_KEY }}"
+  # TF_VAR_ssh_public_key: "${{ secrets.TF_VAR_SSH_PUBLIC_KEY }}"
+  # TF_VAR_ssh_private_key: "${{ secrets.TF_VAR_SSH_PRIVATE_KEY }}"
 
 jobs:
   # build-and-publish-latest:
