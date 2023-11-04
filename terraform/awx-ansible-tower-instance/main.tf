@@ -37,5 +37,5 @@ module "hashiqube" {
   debug_user_data            = true
   debug_allow_ssh_cidr_range = "0.0.0.0/0"
   whitelist_cidr             = "101.189.198.17/32"
-  vagrant_provisioners       = "basetools,docker,minikube,ansible-tower"
+  vagrant_provisioners       = "basetools,docsify,docker,minikube,ansible-tower"
 }
