@@ -22,12 +22,6 @@ terraform {
 
 provider "aws" {}
 
-provider "azurerm" {
-  features {}
-}
-
-provider "google" {}
-
 module "aws_hashiqube" {
 #   source                     = "star3am/hashiqube/hashicorp//modules/aws-hashiqube"
   source                     = "git::https://github.com/star3am/terraform-hashicorp-hashiqube.git//modules/aws-hashiqube?ref=debug"
