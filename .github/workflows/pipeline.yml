@@ -177,6 +177,9 @@ jobs:
           workspace: "awx-ansible-tower"
           configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
           plan_only: true
+        env:
+          TF_VAR_ssh_public_key: "${{ vars.TF_VAR_SSH_PUBLIC_KEY }}"
+          TF_VAR_ssh_private_key: "${{ secrets.TF_VAR_SSH_RIVATE_KEY }}"
 
       - name: Get Plan Output
         uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.0
