@@ -29,8 +29,8 @@ provider "azurerm" {
 provider "google" {}
 
 module "aws_hashiqube" {
-  source                     = "star3am/hashiqube/hashicorp//modules/aws-hashiqube"
-  # source                     = "git::https://github.com/star3am/terraform-hashicorp-hashiqube.git//modules/aws-hashiqube?ref=debug"
+#   source                     = "star3am/hashiqube/hashicorp//modules/aws-hashiqube"
+  source                     = "git::https://github.com/star3am/terraform-hashicorp-hashiqube.git//modules/aws-hashiqube?ref=debug"
   deploy_to_aws              = true
   aws_instance_type          = "t2.large"
   deploy_to_azure            = false
