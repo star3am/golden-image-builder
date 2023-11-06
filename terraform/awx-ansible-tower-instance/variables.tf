@@ -49,8 +49,8 @@ variable "ssh_public_key" {
 
 variable "ssh_private_key" {
   type        = string
-  default     = "~/.ssh/id_rsa" #tfsec:ignore:general-secrets-sensitive-in-variable
-  description = "Path to your SSH private key, matching the public key above"
+  default     = "" #tfsec:ignore:general-secrets-sensitive-in-variable
+  description = "Content of your SSH private key, matching the public key above"
   sensitive   = true
 }
 

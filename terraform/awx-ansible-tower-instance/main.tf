@@ -28,8 +28,9 @@ provider "azurerm" {
 
 provider "google" {}
 
-module "hashiqube" {
-  source                     = "star3am/hashiqube/hashicorp"
+module "aws_hashiqube" {
+  source                     = "star3am/hashiqube/hashicorp//modules/aws-hashiqube"
+  # source                     = "git::https://github.com/star3am/terraform-hashicorp-hashiqube.git//modules/aws-hashiqube?ref=debug"
   deploy_to_aws              = true
   aws_instance_type          = "t2.large"
   deploy_to_azure            = false
@@ -37,5 +38,5 @@ module "hashiqube" {
   debug_user_data            = true
   debug_allow_ssh_cidr_range = "0.0.0.0/0"
   whitelist_cidr             = "101.189.198.17/32"
-  vagrant_provisioners       = "basetools,docsify,docker,minikube,ansible-tower"
+  vagrant_provisioners       = "basetools,docker,minikube,ansible-tower"
 }
