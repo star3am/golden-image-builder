@@ -26,8 +26,5 @@ make docs
 echo "make tfsec"
 make tfsec
 
-# echo "make plan-all"
-# make plan-all
-
 echo "pre-commit run -a"
 pre-commit run -a
