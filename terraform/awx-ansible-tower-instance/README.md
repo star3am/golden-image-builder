@@ -12,18 +12,6 @@ Source: git::https://github.com/star3am/terraform-hashicorp-hashiqube.git//modul
 
 Version: debug
 
-### <a name="module_azure_hashiqube"></a> [azure_hashiqube](#module_azure_hashiqube)
-
-Source: git::https://github.com/star3am/terraform-hashicorp-hashiqube.git//modules/gcp-hashiqube
-
-Version: debug
-
-### <a name="module_gcp_hashiqube"></a> [gcp_hashiqube](#module_gcp_hashiqube)
-
-Source: git::https://github.com/star3am/terraform-hashicorp-hashiqube.git//modules/gcp-hashiqube
-
-Version: debug
-
 ## Resources
 
 No resources.

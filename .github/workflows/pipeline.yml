@@ -94,7 +94,7 @@ jobs:
     steps:
       - name: Terraform version
         run: terraform -v
-      
+
       - name: Terraform plan
         run: cd terraform/azure-shared-image-gallery && terraform plan
         env:
