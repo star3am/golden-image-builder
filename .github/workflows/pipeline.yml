@@ -7,6 +7,7 @@ on: # yamllint disable-line rule:truthy
   push: # yamllint disable-line rule:empty-values
 
 env:
+  TF_CLOUD_ENABLED: false
   TF_CLOUD_ORGANIZATION: "nolan"
   TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
   TF_WORKSPACE: "golden-image-builder"
@@ -80,10 +81,39 @@ jobs:
       - name: Run
         run: ./run.sh
 
-  azure-image-gallery:
+  azure-image-gallery-on-local:
     needs: run-run-dot-sh
     if: |
       always() &&
+      env.TF_CLOUD_ENABLED == false &&
+      (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped')
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
+      options: --user 1001
+
+    steps:
+      - name: Terraform version
+        run: terraform -v
+      
+      - name: Terraform plan
+        run: cd terraform/azure-shared-image-gallery && terraform plan
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
+
+  azure-image-gallery-on-tfc:
+    needs: run-run-dot-sh
+    if: |
+      always() &&
+      env.TF_CLOUD_ENABLED == true &&
       (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped')
     runs-on: ubuntu-latest
     container:
@@ -99,6 +129,8 @@ jobs:
       - name: Upload Configuration
         uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
         id: plan-upload
+        if: |
+          env.GITHUB_TOKEN == true
         with:
           workspace: 'azure-image-gallery'
           directory: ${{ env.CONFIG_DIRECTORY }}
@@ -109,6 +141,8 @@ jobs:
       - name: Create Plan Run
         uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
         id: plan-run
+        if: |
+          env.GITHUB_TOKEN == true
         with:
           workspace: 'azure-image-gallery'
           configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
@@ -119,6 +153,8 @@ jobs:
       - name: Get Plan Output
         uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.0
         id: plan-output
+        if: |
+          env.GITHUB_TOKEN == true
         with:
           plan: ${{ fromJSON(steps.plan-run.outputs.payload).data.relationships.plan.data.id }}
         env:
