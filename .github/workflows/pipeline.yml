@@ -84,7 +84,6 @@ jobs:
     needs: run-run-dot-sh
     if: |
       always() &&
-      ${{ vars.TF_CLOUD_ENABLED }} &&
       (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped')
     runs-on: ubuntu-latest
     container:
@@ -114,7 +113,6 @@ jobs:
     needs: run-run-dot-sh
     if: |
       always() &&
-      ${{ vars.TF_CLOUD_ENABLED }} &&
       (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped')
     runs-on: ubuntu-latest
     container:
@@ -228,6 +226,36 @@ jobs:
 
   awx-ansible-tower:
     needs: azure-image-gallery
+    if: |
+      always() &&
+      (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped') &&
+      (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped' || needs.azure-image-gallery-on-tfc.result == 'success' || needs.azure-image-gallery-on-tfc.result == 'skipped')
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
+      options: --user 1001
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Terraform version
+        run: terraform -v
+      
+      - name: Terraform plan
+        run: cd terraform/awx-ansible-tower-instance && terraform plan
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
+
+  awx-ansible-tower-on-tfc:
+    needs: azure-image-gallery-on-tfc
     if: |
       always() &&
       (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped') &&
