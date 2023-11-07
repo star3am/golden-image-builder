@@ -97,10 +97,12 @@ jobs:
         run: terraform -v
 
       - name: Terraform init
-        run: cd ${{ github.workspace }}/terraform/azure-shared-image-gallery && terraform init -upgrade
+        run: terraform init -upgrade
+        working-directory: ./terraform/azure-shared-image-gallery
 
       - name: Terraform plan
-        run: cd ${{ github.workspace }}/terraform/azure-shared-image-gallery && terraform plan
+        run: terraform plan
+        working-directory: ./terraform/azure-shared-image-gallery
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
