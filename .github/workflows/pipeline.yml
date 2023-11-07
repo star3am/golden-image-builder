@@ -7,7 +7,6 @@ on: # yamllint disable-line rule:truthy
   push: # yamllint disable-line rule:empty-values
 
 env:
-  TF_CLOUD_ENABLED: false
   TF_CLOUD_ORGANIZATION: "nolan"
   TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
   TF_WORKSPACE: "golden-image-builder"
@@ -85,7 +84,7 @@ jobs:
     needs: run-run-dot-sh
     if: |
       always() &&
-      (${{ env.TF_CLOUD_ENABLED }} == false) &&
+      ${{ vars.TF_CLOUD_ENABLED }} == false &&
       (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped')
     runs-on: ubuntu-latest
     container:
@@ -113,7 +112,7 @@ jobs:
     needs: run-run-dot-sh
     if: |
       always() &&
-      env.TF_CLOUD_ENABLED == true &&
+      ${{ vars.TF_CLOUD_ENABLED }} == true &&
       (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped')
     runs-on: ubuntu-latest
     container:
