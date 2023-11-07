@@ -26,7 +26,7 @@ provider "azurerm" {
   features {}
 }
 
-# provider "google" {}
+provider "google" {}
 
 module "aws_hashiqube" {
   # source                     = "star3am/hashiqube/hashicorp//modules/aws-hashiqube"
