@@ -240,7 +240,7 @@ jobs:
 
       - name: Terraform version
         run: terraform -v
-      
+
       - name: Terraform plan
         run: cd terraform/awx-ansible-tower-instance && terraform plan
         env:
