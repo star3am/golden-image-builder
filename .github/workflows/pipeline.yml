@@ -164,27 +164,27 @@ jobs:
         env:
           CONFIG_DIRECTORY: "./terraform/azure-shared-image-gallery"
 
-      # - name: Upload Configuration
-      #   uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.4
-      #   id: upload
-      #   with:
-      #     workspace: ${{ env.TF_WORKSPACE }}
-      #     directory: "./terraform/azure-shared-image-gallery"
+      - name: Upload Configuration
+        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.4
+        id: upload
+        with:
+          workspace: ${{ env.TF_WORKSPACE }}
+          directory: "./terraform/azure-shared-image-gallery"
 
-      # - name: Create Run
-      #   uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.4
-      #   id: create-run
-      #   with:
-      #     workspace: ${{ env.TF_WORKSPACE }}
-      #     configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
+      - name: Create Run
+        uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.4
+        id: create-run
+        with:
+          workspace: ${{ env.TF_WORKSPACE }}
+          configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
 
-      # - name: Apply Run
-      #   uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.0.4
-      #   # assign id attribute to reference in subsequent steps
-      #   id: apply
-      #   with:
-      #     run: ${{ steps.create-run.outputs.run_id }}
-      #     comment: "Confirmed from GitHub Actions CI"
+      - name: Apply Run
+        uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.0.4
+        # assign id attribute to reference in subsequent steps
+        id: apply
+        with:
+          run: ${{ steps.create-run.outputs.run_id }}
+          comment: "Confirmed from GitHub Actions CI"
 
   awx-ansible-tower:
     needs: azure-image-gallery
@@ -203,14 +203,13 @@ jobs:
       - name: Terraform version
         run: terraform -v
 
-      - name: Debug
-        run: pwd && ls -la
-
       - name: Terraform init
-        run: cd terraform/awx-ansible-tower-instance && terraform init -upgrade
+        run: terraform init -upgrade
+        working-directory: ./terraform/awx-ansible-tower-instance
 
       - name: Terraform plan
-        run: cd terraform/awx-ansible-tower-instance && terraform plan
+        run: terraform plan
+        working-directory: ./terraform/awx-ansible-tower-instance
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -264,26 +263,26 @@ jobs:
         with:
           plan: ${{ fromJSON(steps.plan-run.outputs.payload).data.relationships.plan.data.id }}
 
-        # - name: Upload Configuration
-        #   uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.4
-        #   id: upload
-        #   with:
-        #     workspace: "awx-ansible-tower"
-        #     directory: "./terraform/awx-ansible-tower-instance"
+      - name: Upload Configuration
+        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.4
+        id: upload
+        with:
+          workspace: "awx-ansible-tower"
+          directory: "./terraform/awx-ansible-tower-instance"
 
-        # - name: Create Run
-        #   uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.4
-        #   id: create-run
-        #   with:
-        #     workspace: "awx-ansible-tower"
-        #     configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
+      - name: Create Run
+        uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.4
+        id: create-run
+        with:
+          workspace: "awx-ansible-tower"
+          configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
 
-        # - name: Apply Run
-        #   uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.0.4
-        #   id: apply
-        #   with:
-        #     run: ${{ steps.create-run.outputs.run_id }}
-        #     comment: "Confirmed from GitHub Actions CI"
+      - name: Apply Run
+        uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.0.4
+        id: apply
+        with:
+          run: ${{ steps.create-run.outputs.run_id }}
+          comment: "Confirmed from GitHub Actions CI"
 
   packer-build:
     needs: azure-image-gallery
