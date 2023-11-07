@@ -185,7 +185,7 @@ jobs:
     needs: azure-image-gallery
     if: |
       always() &&
-      (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped')
+      (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped') &&
       (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped' || needs.azure-image-gallery-on-tfc.result == 'success' || needs.azure-image-gallery-on-tfc.result == 'skipped')
     runs-on: ubuntu-latest
     container:
@@ -228,7 +228,7 @@ jobs:
     needs: azure-image-gallery
     if: |
       always() &&
-      (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped')
+      (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped') &&
       (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped' || needs.azure-image-gallery-on-tfc.result == 'success' || needs.azure-image-gallery-on-tfc.result == 'skipped')
     runs-on: ubuntu-latest
     container:
