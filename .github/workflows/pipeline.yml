@@ -241,7 +241,7 @@ jobs:
       - name: Terraform version
         run: terraform -v
 
-      - name: Terraform init
+      - name: Debug
         run: pwd && ls -la
 
       - name: Terraform init
