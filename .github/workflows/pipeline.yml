@@ -84,7 +84,7 @@ jobs:
     needs: run-run-dot-sh
     if: |
       always() &&
-      ${{ vars.TF_CLOUD_ENABLED == 'false' }} &&
+      ${{ vars.TF_CLOUD_ENABLED == false }} &&
       (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped')
     runs-on: ubuntu-latest
     container:
