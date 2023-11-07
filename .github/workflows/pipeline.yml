@@ -80,7 +80,7 @@ jobs:
       - name: Run
         run: ./run.sh
 
-  azure-image-gallery-on-local:
+  azure-image-gallery:
     needs: run-run-dot-sh
     if: |
       always() &&
@@ -185,7 +185,7 @@ jobs:
     needs: azure-image-gallery
     if: |
       always() &&
-      (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped')
+      (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped' || needs.azure-image-gallery-on-tfc.result == 'success' || needs.azure-image-gallery-on-tfc.result == 'skipped')
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
@@ -227,7 +227,7 @@ jobs:
     needs: azure-image-gallery
     if: |
       always() &&
-      (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped')
+      (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped' || needs.azure-image-gallery-on-tfc.result == 'success' || needs.azure-image-gallery-on-tfc.result == 'skipped')
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
