@@ -96,11 +96,11 @@ jobs:
       - name: Terraform version
         run: terraform -v
 
-      - name: Debug
-        run: pwd && ls -la
+      - name: Terraform init
+        run: cd ${{ github.workspace }}/terraform/azure-shared-image-gallery && terraform init -upgrade
 
       - name: Terraform plan
-        run: cd terraform/azure-shared-image-gallery && terraform plan
+        run: cd ${{ github.workspace }}/terraform/azure-shared-image-gallery && terraform plan
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -183,49 +183,6 @@ jobs:
       #   with:
       #     run: ${{ steps.create-run.outputs.run_id }}
       #     comment: "Confirmed from GitHub Actions CI"
-
-  packer-build:
-    needs: azure-image-gallery
-    if: |
-      always() &&
-      (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped') &&
-      (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped' || needs.azure-image-gallery-on-tfc.result == 'success' || needs.azure-image-gallery-on-tfc.result == 'skipped')
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
-      options: --user 1001
-
-    steps:
-      # Checking out the repo
-      - uses: actions/checkout@v3
-
-      - name: Ansible version
-        run: ansible --version
-
-      - name: Ansible Galaxy install roles
-        run: ansible-galaxy install -f -r ansible/roles/requirements.yml -p ansible/roles/
-
-      - name: Packer version
-        run: packer -v
-
-      - name: Packer init
-        run: packer init -upgrade packer/all
-
-      - name: Packer build
-        # https://developer.hashicorp.com/packer/docs/templates/hcl_templates/onlyexcept
-        run: packer build -force -only='amazon-ebs.ubuntu-2204' packer/all
-        # run: packer build -force -except='vagrant.*' packer/all
-        # run: PACKER_LOG=1 packer build -debug -force -only='googlecompute.ubuntu-2204' packer/all
-        env:
-          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-          GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
 
   awx-ansible-tower:
     needs: azure-image-gallery
@@ -325,3 +282,46 @@ jobs:
         #   with:
         #     run: ${{ steps.create-run.outputs.run_id }}
         #     comment: "Confirmed from GitHub Actions CI"
+
+  packer-build:
+    needs: azure-image-gallery
+    if: |
+      always() &&
+      (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped') &&
+      (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped' || needs.azure-image-gallery-on-tfc.result == 'success' || needs.azure-image-gallery-on-tfc.result == 'skipped')
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
+      options: --user 1001
+
+    steps:
+      # Checking out the repo
+      - uses: actions/checkout@v3
+
+      - name: Ansible version
+        run: ansible --version
+
+      - name: Ansible Galaxy install roles
+        run: ansible-galaxy install -f -r ansible/roles/requirements.yml -p ansible/roles/
+
+      - name: Packer version
+        run: packer -v
+
+      - name: Packer init
+        run: packer init -upgrade packer/all
+
+      - name: Packer build
+        # https://developer.hashicorp.com/packer/docs/templates/hcl_templates/onlyexcept
+        run: packer build -force -only='amazon-ebs.ubuntu-2204' packer/all
+        # run: packer build -force -except='vagrant.*' packer/all
+        # run: PACKER_LOG=1 packer build -debug -force -only='googlecompute.ubuntu-2204' packer/all
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
