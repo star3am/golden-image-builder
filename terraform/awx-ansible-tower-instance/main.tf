@@ -47,8 +47,8 @@ module "aws_hashiqube" {
 #   deploy_to_gcp = false
 # }
 
-module "azure_hashiqube" {
-  # source          = "star3am/hashiqube/hashicorp//modules/aws-hashiqube"
-  source          = "git::https://github.com/star3am/terraform-hashicorp-hashiqube.git//modules/gcp-hashiqube?ref=debug"
-  deploy_to_azure = false
-}
+# module "azure_hashiqube" {
+#   # source          = "star3am/hashiqube/hashicorp//modules/aws-hashiqube"
+#   source          = "git::https://github.com/star3am/terraform-hashicorp-hashiqube.git//modules/azure-hashiqube?ref=debug"
+#   deploy_to_azure = false
+# }
