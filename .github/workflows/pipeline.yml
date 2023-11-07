@@ -242,7 +242,7 @@ jobs:
         run: terraform -v
 
       - name: Terraform init
-        run: pwd && ls -la 
+        run: pwd && ls -la
 
       - name: Terraform init
         run: cd terraform/awx-ansible-tower-instance && terraform init -upgrade
