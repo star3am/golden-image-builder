@@ -137,10 +137,8 @@ jobs:
           env.GITHUB_TOKEN == true
         with:
           workspace: 'azure-image-gallery'
-          directory: ${{ env.CONFIG_DIRECTORY }}
+          directory: './terraform/azure-shared-image-gallery'
           speculative: true
-        env:
-          CONFIG_DIRECTORY: "./terraform/azure-shared-image-gallery"
 
       - name: Create Plan Run
         uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
@@ -149,6 +147,7 @@ jobs:
           env.GITHUB_TOKEN == true
         with:
           workspace: 'azure-image-gallery'
+          directory: './terraform/azure-shared-image-gallery'
           configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
           plan_only: true
         env:
@@ -168,14 +167,14 @@ jobs:
         uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.4
         id: upload
         with:
-          workspace: ${{ env.TF_WORKSPACE }}
+          workspace: 'azure-image-gallery'
           directory: "./terraform/azure-shared-image-gallery"
 
       - name: Create Run
         uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.4
         id: create-run
         with:
-          workspace: ${{ env.TF_WORKSPACE }}
+          workspace: 'azure-image-gallery'
           configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
 
       - name: Apply Run
