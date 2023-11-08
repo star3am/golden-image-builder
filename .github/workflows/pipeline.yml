@@ -209,7 +209,7 @@ jobs:
         working-directory: ./terraform/awx-ansible-tower-instance
         env:
           TF_VAR_ssh_public_key: ${{ vars.TF_VAR_SSH_PUBLIC_KEY }}
-          TF_VAR_ssh_private_key: ${{ vars.TF_VAR_SSH_PRIVATE_KEY }}
+          TF_VAR_ssh_private_key: ${{ secrets.TF_VAR_SSH_PRIVATE_KEY }}
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
@@ -239,8 +239,8 @@ jobs:
 
       - name: Terraform auto tfvars
         run: |
-          echo "ssh_private_key = \"${{ secrets.TF_VAR_SSH_PRIVATE_KEY }}\"" >> terraform.auto.tfvars
-          echo "ssh_public_key = <<EOF\n${{ vars.TF_VAR_SSH_PUBLIC_KEY }}\nEOF" >> terraform.auto.tfvars
+          echo "ssh_public_key = \"${{ vars.TF_VAR_SSH_PUBLIC_KEY }}\"" >> terraform.auto.tfvars
+          echo "ssh_private_key = <<EOF\n${{ secrets.TF_VAR_SSH_PRIVATE_KEY }}\nEOF" >> terraform.auto.tfvars
           ls -la
           cat terraform.auto.tfvars
 
