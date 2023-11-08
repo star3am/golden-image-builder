@@ -150,8 +150,6 @@ jobs:
           directory: './terraform/azure-shared-image-gallery'
           configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
           plan_only: true
-        env:
-          CONFIG_DIRECTORY: "./terraform/azure-shared-image-gallery"
 
       - name: Get Plan Output
         uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.0
@@ -159,9 +157,9 @@ jobs:
         if: |
           env.GITHUB_TOKEN == true
         with:
+          workspace: 'azure-image-gallery'
+          directory: './terraform/azure-shared-image-gallery'
           plan: ${{ fromJSON(steps.plan-run.outputs.payload).data.relationships.plan.data.id }}
-        env:
-          CONFIG_DIRECTORY: "./terraform/azure-shared-image-gallery"
 
       - name: Upload Configuration
         uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.4
