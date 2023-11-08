@@ -241,6 +241,8 @@ jobs:
         run: |
           echo "ssh_private_key = ${{ secrets.TF_VAR_SSH_PRIVATE_KEY }}" >> terraform.auto.tfvars
           echo "ssh_public_key = ${{ vars.TF_VAR_SSH_PUBLIC_KEY }}" >> terraform.auto.tfvars
+          ls -la
+          cat terraform.auto.tfvars
 
       - name: Upload Configuration
         uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
