@@ -15,7 +15,7 @@ env:
 jobs:
   build-and-publish-latest:
     if: |
-      always() &&
+      # always() &&
       contains(github.event.pull_request.labels.*.name, 'rebuild container image') &&
       (github.ref != 'refs/heads/main' || github.ref != 'refs/heads/master')
     runs-on: ubuntu-latest
@@ -48,7 +48,7 @@ jobs:
   run-run-dot-sh:
     needs: build-and-publish-latest
     if: |
-      always() &&
+      # always() &&
       (github.ref != 'refs/heads/main' || github.ref != 'refs/heads/master') &&
       (needs.build-and-publish-latest.result == 'success' || needs.build-and-publish-latest.result == 'skipped')
     runs-on: ubuntu-latest
@@ -83,7 +83,7 @@ jobs:
   azure-image-gallery:
     needs: run-run-dot-sh
     if: |
-      always() &&
+      # always() &&
       (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped')
     runs-on: ubuntu-latest
     container:
@@ -117,7 +117,7 @@ jobs:
   azure-image-gallery-on-tfc:
     needs: run-run-dot-sh
     if: |
-      always() &&
+      # always() &&
       (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped')
     runs-on: ubuntu-latest
     container:
@@ -187,8 +187,8 @@ jobs:
     needs: azure-image-gallery
     if: |
       always() &&
-      (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped') &&
-      (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped' || needs.azure-image-gallery-on-tfc.result == 'success' || needs.azure-image-gallery-on-tfc.result == 'skipped')
+      # (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped') &&
+      # (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped' || needs.azure-image-gallery-on-tfc.result == 'success' || needs.azure-image-gallery-on-tfc.result == 'skipped')
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
@@ -224,8 +224,8 @@ jobs:
     needs: azure-image-gallery-on-tfc
     if: |
       always() &&
-      (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped') &&
-      (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped' || needs.azure-image-gallery-on-tfc.result == 'success' || needs.azure-image-gallery-on-tfc.result == 'skipped')
+      # (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped') &&
+      # (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped' || needs.azure-image-gallery-on-tfc.result == 'success' || needs.azure-image-gallery-on-tfc.result == 'skipped')
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/${{ github.repository_owner }}/golden-image-builder-container:latest
@@ -293,7 +293,7 @@ jobs:
   packer-build:
     needs: azure-image-gallery
     if: |
-      always() &&
+      # always() &&
       (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped') &&
       (needs.azure-image-gallery.result == 'success' || needs.azure-image-gallery.result == 'skipped' || needs.azure-image-gallery-on-tfc.result == 'success' || needs.azure-image-gallery-on-tfc.result == 'skipped')
     runs-on: ubuntu-latest
