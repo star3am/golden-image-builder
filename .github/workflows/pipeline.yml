@@ -210,6 +210,7 @@ jobs:
           echo "ssh_private_key = <<EOF\n${{ secrets.TF_VAR_SSH_PRIVATE_KEY }}\nEOF" >> terraform.auto.tfvars
           ls -la
           cat terraform.auto.tfvars
+        working-directory: ./terraform/awx-ansible-tower-instance
 
       - name: Terraform plan
         run: terraform plan
@@ -250,6 +251,7 @@ jobs:
           echo "ssh_private_key = <<EOF\n${{ secrets.TF_VAR_SSH_PRIVATE_KEY }}\nEOF" >> terraform.auto.tfvars
           ls -la
           cat terraform.auto.tfvars
+        working-directory: ./terraform/awx-ansible-tower-instance
 
       - name: Upload Configuration
         uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
