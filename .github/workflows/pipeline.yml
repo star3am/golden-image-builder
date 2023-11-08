@@ -14,10 +14,10 @@ env:
 
 jobs:
   build-and-publish-latest:
-    if: |
-      always() &&
-      contains(github.event.pull_request.labels.*.name, 'rebuild container image') &&
-      (github.ref != 'refs/heads/main' || github.ref != 'refs/heads/master')
+    # if: |
+    #   always() &&
+    #   contains(github.event.pull_request.labels.*.name, 'rebuild container image') &&
+    #   (github.ref != 'refs/heads/main' || github.ref != 'refs/heads/master')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
