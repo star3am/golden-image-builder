@@ -239,8 +239,8 @@ jobs:
 
       - name: Terraform auto tfvars
         run: |
-          echo "ssh_private_key = ${{ secrets.TF_VAR_SSH_PRIVATE_KEY }}" >> terraform.auto.tfvars
-          echo "ssh_public_key = ${{ vars.TF_VAR_SSH_PUBLIC_KEY }}" >> terraform.auto.tfvars
+          echo "ssh_private_key = \"${{ secrets.TF_VAR_SSH_PRIVATE_KEY }}\"" >> terraform.auto.tfvars
+          echo "ssh_public_key = <<EOF\n${{ vars.TF_VAR_SSH_PUBLIC_KEY }}\nEOF" >> terraform.auto.tfvars
           ls -la
           cat terraform.auto.tfvars
 
