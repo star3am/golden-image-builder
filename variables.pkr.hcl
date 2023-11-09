@@ -12,7 +12,7 @@ locals {
 # variables
 variable "skip_create_image" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "build_directory" {
