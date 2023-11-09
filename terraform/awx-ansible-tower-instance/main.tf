@@ -28,9 +28,9 @@ provider "azurerm" {
 
 provider "google" {}
 
-module "aws_hashiqube" {
+module "awx_ansible_tower" {
   # source                     = "star3am/hashiqube/hashicorp"
-  source                     = "git@github.com:star3am/terraform-hashicorp-hashiqube.git?ref=riaan"
+  source                     = "github.com/star3am/terraform-hashicorp-hashiqube.git?ref=riaan"
   deploy_to_aws              = true
   aws_instance_type          = "t2.large"
   use_packer_image           = true

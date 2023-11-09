@@ -6,11 +6,11 @@ No providers.
 
 The following Modules are called:
 
-### <a name="module_aws_hashiqube"></a> [aws_hashiqube](#module_aws_hashiqube)
+### <a name="module_awx_ansible_tower"></a> [awx_ansible_tower](#module_awx_ansible_tower)
 
-Source: star3am/hashiqube/hashicorp
+Source: github.com/star3am/terraform-hashicorp-hashiqube.git
 
-Version:
+Version: riaan
 
 ## Resources
 
