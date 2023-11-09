@@ -13,37 +13,37 @@ env:
   CONFIG_DIRECTORY: "./"
 
 jobs:
-  build-and-publish-latest:
-    # if: |
-    #   always() &&
-    #   contains(github.event.pull_request.labels.*.name, 'rebuild container image') &&
-    #   (github.ref != 'refs/heads/main' || github.ref != 'refs/heads/master')
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+  # build-and-publish-latest:
+  #   if: |
+  #     always() &&
+  #     contains(github.event.pull_request.labels.*.name, 'rebuild container image') &&
+  #     (github.ref != 'refs/heads/main' || github.ref != 'refs/heads/master')
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      # https://github.com/docker/setup-qemu-action
-      # https://blog.thesparktree.com/docker-multi-arch-github-actions
-      - name: Setup QEMU
-        uses: docker/setup-qemu-action@v2
-        with:
-          platforms: 'arm64,amd64'
+  #     # https://github.com/docker/setup-qemu-action
+  #     # https://blog.thesparktree.com/docker-multi-arch-github-actions
+  #     - name: Setup QEMU
+  #       uses: docker/setup-qemu-action@v2
+  #       with:
+  #         platforms: 'arm64,amd64'
 
-      # https://github.com/docker/setup-buildx-action
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+  #     # https://github.com/docker/setup-buildx-action
+  #     - name: Set up Docker Buildx
+  #       uses: docker/setup-buildx-action@v2
 
-      # https://github.com/marketplace/actions/docker-build-push-action
-      - uses: mr-smithers-excellent/docker-build-push@v6
-        name: Build and Push Docker image
-        with:
-          image: golden-image-builder-container
-          tags: latest
-          registry: ghcr.io
-          multiPlatform: true
-          platform: linux/amd64,linux/arm64
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+  #     # https://github.com/marketplace/actions/docker-build-push-action
+  #     - uses: mr-smithers-excellent/docker-build-push@v6
+  #       name: Build and Push Docker image
+  #       with:
+  #         image: golden-image-builder-container
+  #         tags: latest
+  #         registry: ghcr.io
+  #         multiPlatform: true
+  #         platform: linux/amd64,linux/arm64
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.GITHUB_TOKEN }}
 
   # run-run-dot-sh:
   #   needs: build-and-publish-latest
