@@ -29,11 +29,7 @@ provider "azurerm" {
 provider "google" {}
 
 module "aws_hashiqube" {
-  # source                     = "star3am/hashiqube/hashicorp//modules/aws-hashiqube"
   source                     = "star3am/hashiqube/hashicorp"
-  # source                     = "git::https://github.com/star3am/terraform-hashicorp-hashiqube.git//modules/aws-hashiqube?ref=debug"
-  # source                     = "git::https://github.com/star3am/terraform-hashicorp-hashiqube.git?ref=debug"
-  # source                       = "github.com/star3am/terraform-aws-hashiqube.git"
   deploy_to_aws              = true
   aws_instance_type          = "t2.large"
   deploy_to_azure            = false
@@ -45,15 +41,3 @@ module "aws_hashiqube" {
   whitelist_cidr             = "101.189.198.17/32"
   vagrant_provisioners       = "basetools,docker,minikube,ansible-tower"
 }
-
-# module "gcp_hashiqube" {
-#   # source        = "star3am/hashiqube/hashicorp//modules/aws-hashiqube"
-#   source        = "git::https://github.com/star3am/terraform-hashicorp-hashiqube.git//modules/gcp-hashiqube?ref=debug"
-#   deploy_to_gcp = false
-# }
-
-# module "azure_hashiqube" {
-#   # source          = "star3am/hashiqube/hashicorp//modules/aws-hashiqube"
-#   source          = "git::https://github.com/star3am/terraform-hashicorp-hashiqube.git//modules/azure-hashiqube?ref=debug"
-#   deploy_to_azure = false
-# }
