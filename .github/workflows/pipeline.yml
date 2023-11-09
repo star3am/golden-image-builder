@@ -185,7 +185,7 @@ jobs:
           comment: "Confirmed from GitHub Actions CI"
 
   packer-build:
-    needs: awx-ansible-tower-on-tfc
+    needs: azure-image-gallery-on-tfc
     if: |
       always() &&
       (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped') &&
