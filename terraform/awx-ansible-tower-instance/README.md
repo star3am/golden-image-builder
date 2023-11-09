@@ -38,4 +38,8 @@ No optional inputs.
 
 ## Outputs
 
-No outputs.
+The following outputs are exported:
+
+### <a name="output_awx_ansible_tower_ip_address"></a> [awx_ansible_tower_ip_address](#output_awx_ansible_tower_ip_address)
+
+Description: AWX Tower IP address
