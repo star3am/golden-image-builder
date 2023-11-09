@@ -3,7 +3,7 @@
 # constraints documentation
 # https://www.packer.io/docs/templates/hcl_templates/variables#type-constraints for more info.
 
-skip_create_image = true
+skip_create_image = false
 build_directory = "./output"
 cpus   = "2"
 memory = "512"
