@@ -8,3 +8,8 @@ variable "ssh_private_key" {
   description = "Content of your SSH private key, matching the public key above"
   sensitive   = true
 }
+
+variable "use_packer_image" {
+  type        = bool
+  description = "Use your Packer build image"
+}
