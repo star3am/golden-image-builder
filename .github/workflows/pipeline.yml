@@ -250,6 +250,7 @@ jobs:
 
       - name: Terraform auto tfvars
         run: |
+          echo "use_packer_image = true" >> terraform.auto.tfvars
           echo "ssh_public_key = \"${{ vars.TF_VAR_SSH_PUBLIC_KEY }}\"" >> terraform.auto.tfvars
           echo "ssh_private_key = <<EOF\n${{ secrets.TF_VAR_SSH_PRIVATE_KEY }}\nEOF" >> terraform.auto.tfvars
           ls -la
@@ -291,6 +292,7 @@ jobs:
 
       - name: Terraform auto tfvars
         run: |
+          echo "use_packer_image = true" >> terraform.auto.tfvars
           echo "ssh_public_key = \"${{ vars.TF_VAR_SSH_PUBLIC_KEY }}\"" >> terraform.auto.tfvars
           echo "ssh_private_key = <<EOF\n${{ secrets.TF_VAR_SSH_PRIVATE_KEY }}\nEOF" >> terraform.auto.tfvars
           ls -la

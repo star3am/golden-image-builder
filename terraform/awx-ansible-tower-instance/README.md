@@ -32,6 +32,12 @@ Description: Content of your SSH public key, matching the private key below
 
 Type: `string`
 
+### <a name="input_use_packer_image"></a> [use_packer_image](#input_use_packer_image)
+
+Description: Use your Packer build image
+
+Type: `bool`
+
 ## Optional Inputs
 
 No optional inputs.

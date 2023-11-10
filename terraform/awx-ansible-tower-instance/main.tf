@@ -33,7 +33,7 @@ module "awx_ansible_tower" {
   source                     = "github.com/star3am/terraform-hashicorp-hashiqube.git?ref=riaan"
   deploy_to_aws              = true
   aws_instance_type          = "t2.large"
-  use_packer_image           = true
+  use_packer_image           = var.use_packer_image
   deploy_to_azure            = false
   deploy_to_gcp              = false
   debug_user_data            = true
