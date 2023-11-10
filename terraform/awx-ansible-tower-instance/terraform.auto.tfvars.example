@@ -1,4 +1,5 @@
 debug_user_data      = true
+use_packer_image     = false
 deploy_to_aws        = true
 deploy_to_gcp        = false
 deploy_to_azure      = false
