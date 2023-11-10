@@ -8,9 +8,9 @@ The following Modules are called:
 
 ### <a name="module_awx_ansible_tower"></a> [awx_ansible_tower](#module_awx_ansible_tower)
 
-Source: github.com/star3am/terraform-hashicorp-hashiqube.git
+Source: star3am/hashiqube/hashicorp
 
-Version: riaan
+Version:
 
 ## Resources
 
