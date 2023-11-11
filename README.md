@@ -488,7 +488,7 @@ ubuntu@hashiqube-aws:~$ cat /build-202311100026.json  | jq
 ...
 ```
 
-7. Once the Image has been built I use Terraform and Hashiqube’s Multi Cloud Terraform https://hashiqube.com/ and https://registry.terraform.io/modules/star3am/hashiqube/hashicorp/latest module to spin up HashiQube on this new Base AMI (Our Golden Image) — I do this for a few reasons:
+7. Once the Image has been built I use Terraform and Hashiqube's Multi Cloud Terraform https://hashiqube.com/ and https://registry.terraform.io/modules/star3am/hashiqube/hashicorp/latest module to spin up HashiQube on this new Base AMI (Our Golden Image) — I do this for a few reasons:
 
 - I need AWX Ansible Tower to showcase some additional functionality and HashiQube already has AWX Ansible Tower running on top of Kubernetes (Minikube) see: https://hashiqube.com/ansible-tower/README
 
@@ -576,8 +576,6 @@ resource "null_resource" "awx_cli" {
 10. You can now build Versioned Golden Images / Standard Operating Environments SOEs — ALL in CODE!!!
 
 Thank you for your time, to go through this how-to, I hope that you have enjoyed it as much as I did putting it together.
-
-
 
 ## Links
 - https://medium.com/@riaan.nolan/gib-the-golden-image-builder-87090b720a89
