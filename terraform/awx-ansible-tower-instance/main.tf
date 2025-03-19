@@ -40,6 +40,6 @@ module "awx_ansible_tower" {
   ssh_public_key             = var.ssh_public_key
   ssh_private_key            = var.ssh_private_key
   debug_allow_ssh_cidr_range = "0.0.0.0/0"
-  whitelist_cidr             = "101.189.198.17/32"
+  whitelist_cidrs            = ["101.189.198.17/32"]
   vagrant_provisioners       = "basetools,docker,minikube,ansible-tower"
 }
