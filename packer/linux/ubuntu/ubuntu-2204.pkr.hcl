@@ -93,8 +93,8 @@ build {
     command = "./packer/scripts/ansible.sh"
     user    = "${build.User}"
     extra_arguments = [
-      #"-v",
-      "--tags", "always,day0",
+      "-v",
+      "--tags", "always, day0, day1",
       "--extra-vars", "ansible_become=true version_number=${local.version_number}"
     ]
     host_alias    = "none"
@@ -118,7 +118,6 @@ build {
     user    = "${build.User}"
     extra_arguments = [
       "-v",
-      "--tags", "always day0 day1",
       "--extra-vars", "foo=bar ubtu22cis_set_grub_user_pass=P@ssw0rd ubtu22cis_bootloader_password_hash=grub.pbkdf2.sha512.Sup3rS3cr3tP4ssw0rd ubtu22cis_grub_user_passwd=$y$j9T$MBA5l/tQyWifM869nQjsi.$cTy0ConcNjIYOn6Cppo5NAky20osrkRxz4fEWA8xac7"
     ]
     host_alias    = "none"
