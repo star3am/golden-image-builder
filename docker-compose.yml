@@ -3,10 +3,11 @@ version: "3.4"
 services:
   golden-image-builder:
     tty: true
+    image: ghcr.io/star3am/golden-image-builder-container:latest
     # Build the container from the Dockerfile before we run it
-    build:
-      context: .
-      dockerfile: ./Dockerfile
+    # build:
+    #   context: .
+    #   dockerfile: ./Dockerfile
     # If you have build and pushed this container to a registry you can use it below and disable build above
     # image: tools-${ARCH}:latest
     network_mode: "bridge"
