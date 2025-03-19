@@ -6,6 +6,7 @@
     "set-git-config-safe-directory": "git config --global --add safe.directory ${containerWorkspaceFolder}",
     "set-git-config-line-endings": "git config --global core.autocrlf input",
     "set-git-config-gpg-program": "git config --global --add gpg.program /usr/bin/gpg",
+    "mkdir-local-bin-folder": "mkdir ~/.local/bin",
     "add-run-dot-sh-to-path": "ln -s ${containerWorkspaceFolder}/run.sh ~/.local/bin/run.sh"
   },
   "customizations": {

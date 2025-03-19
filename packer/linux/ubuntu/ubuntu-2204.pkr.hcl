@@ -113,17 +113,17 @@ build {
   //   only          = ["vagrant.ubuntu-2204", "azure-arm.ubuntu-2204", "googlecompute.ubuntu-2204"]
   // }
 
-  // provisioner "ansible" {
-  //   command = "./packer/scripts/ansible.sh"
-  //   user    = "${build.User}"
-  //   extra_arguments = [
-  //     #"-v",
-  //     "--extra-vars", "foo=bar"
-  //   ]
-  //   host_alias    = "none"
-  //   playbook_file = "./ansible/roles/UBUNTU22-CIS/site.yml"
-  //   only          = ["amazon-ebs.ubuntu-2204"]
-  // }
+  provisioner "ansible" {
+    command = "./packer/scripts/ansible.sh"
+    user    = "${build.User}"
+    extra_arguments = [
+      #"-v",
+      "--extra-vars", "foo=bar"
+    ]
+    host_alias    = "none"
+    playbook_file = "./ansible/roles/UBUNTU22-CIS/site.yml"
+    only          = ["amazon-ebs.ubuntu-2204"]
+  }
 
   provisioner "shell-local" {
     inline = ["curl -s https://api.ipify.org/?format=none"]

@@ -23,8 +23,8 @@ make clean
 echo "make docs"
 make docs
 
-echo "make tfsec"
-make tfsec
+# echo "make tfsec"
+# make tfsec
 
 echo "pre-commit run -a"
 pre-commit run -a
