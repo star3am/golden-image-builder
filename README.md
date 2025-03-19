@@ -284,18 +284,18 @@ Lint Dockerfiles.........................................................Passed
 
 ## Contributing
 
-Clone this Repo, and install VSCode and the Dev Containers extension. 
+Clone this Repo, and install VSCode and the Dev Containers extension.
 
-Make some changes in your own branch and run in the VSCode Terminal: 
+Make some changes in your own branch and run in the VSCode Terminal:
 `./run.sh`
 
-Once successfull, push to your branch and create a PR. 
+Once successfull, push to your branch and create a PR.
 
-Shout if you need help! 
+Shout if you need help!
 
 ## Testing
 
-Run in the VSCode Terminal: 
+Run in the VSCode Terminal:
 `./run.sh`
 
 ## More info
@@ -566,7 +566,7 @@ resource "null_resource" "awx_cli" {
       host        = "10.9.99.10"
     }
   }
-  
+
   provisioner "local-exec" {
     command = "${var.tower_cli_local} --conf.host ${var.tower_host} -f human job_templates launch 9 --monitor --filter status --conf.insecure --conf.token ${data.external.tower_token.result.token}"
   }
@@ -584,4 +584,3 @@ Thank you for your time, to go through this how-to, I hope that you have enjoyed
 
 ## Force Build
 001
-
