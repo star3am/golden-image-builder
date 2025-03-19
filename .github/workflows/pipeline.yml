@@ -85,6 +85,7 @@ jobs:
     needs: run-run-dot-sh
     if: |
       always() &&
+      (${{ vars.AZURE == 'true' }}) &&
       (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped')
     runs-on: ubuntu-latest
     container:
@@ -119,6 +120,7 @@ jobs:
     needs: run-run-dot-sh
     if: |
       always() &&
+      (${{ vars.AZURE == 'true' }}) &&
       (needs.run-run-dot-sh.result == 'success' || needs.run-run-dot-sh.result == 'skipped')
     runs-on: ubuntu-latest
     container:

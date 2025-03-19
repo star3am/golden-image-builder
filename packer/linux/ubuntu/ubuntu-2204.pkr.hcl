@@ -118,7 +118,7 @@ build {
     user    = "${build.User}"
     extra_arguments = [
       #"-v",
-      "--extra-vars", "foo=bar"
+      "--extra-vars", "foo=bar ubtu22cis_bootloader_password_hash='$1$4mk2S5OT$6mLr4zJAwoFx/RO.gdcny/'"
     ]
     host_alias    = "none"
     playbook_file = "./ansible/roles/UBUNTU22-CIS/site.yml"
