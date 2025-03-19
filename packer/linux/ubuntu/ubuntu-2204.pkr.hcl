@@ -93,12 +93,13 @@ build {
     command = "./packer/scripts/ansible.sh"
     user    = "${build.User}"
     extra_arguments = [
-      "-v",
-      "--tags", "always, day0, day1",
+      # "-v",
+      # "--tags", "always, day0, day1",
       "--extra-vars", "ansible_become=true version_number=${local.version_number}"
     ]
     host_alias    = "none"
     playbook_file = "./ansible/roles/ansible-role-example-role/site.yml"
+    only          = ["amazon-ebs.ubuntu-2204"]
   }
 
   // provisioner "ansible" {
