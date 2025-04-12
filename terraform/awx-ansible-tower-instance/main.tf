@@ -43,3 +43,35 @@ module "awx_ansible_tower" {
   whitelist_cidrs            = ["101.189.198.17/32"]
   vagrant_provisioners       = "basetools,docker,minikube,ansible-tower"
 }
+
+data "external" "tower_token" {
+  program = ["/bin/bash", "-c", "${var.tower_cli_local} login --conf.host ${var.tower_host} --conf.insecure --conf.username admin --conf.password \"${var.tower_password}\""]
+}
+
+locals {
+  timestamp = timestamp()
+}
+
+resource "null_resource" "awx_cli" {
+  triggers = {
+    timestamp = local.timestamp
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "${var.tower_cli_remote} --conf.host module.awx_ansible_tower[0].awx_ansible_tower_ip_address, -f human job_templates launch ansible-role-example-role --monitor --filter status --conf.insecure --conf.token ${data.external.tower_token.result.token}",
+    ]
+    on_failure = continue
+    connection {
+      type        = "ssh"
+      user        = "vagrant"
+      password    = "vagrant"
+      host        = module.awx_ansible_tower[0].awx_ansible_tower_ip_address
+    }
+  }
+  
+  provisioner "local-exec" {
+    command    = "${var.tower_cli_local} --conf.host module.awx_ansible_tower[0].awx_ansible_tower_ip_address -f human job_templates launch ansible-role-example-role --monitor --filter status --conf.insecure --conf.token ${data.external.tower_token.result.token}"
+    on_failure = continue
+  }
+}

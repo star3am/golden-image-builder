@@ -13,3 +13,24 @@ variable "use_packer_image" {
   type        = bool
   description = "Use your Packer build image"
 }
+
+variable "tower_cli_remote" {
+  type    = string
+  default = "~/.local/bin/awx"
+}
+
+variable "tower_cli_local" {
+  type    = string
+  default = "/home/vagrant/.local/bin/awx"
+}
+
+variable "tower_host" {
+  type    = string
+  default = "http://localhost:8043/"
+}
+
+variable "tower_password" {
+  type      = string
+  sensitive = true
+  default   = "password"
+}
