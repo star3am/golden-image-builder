@@ -114,17 +114,17 @@ build {
   //   only          = ["vagrant.ubuntu-2204", "azure-arm.ubuntu-2204", "googlecompute.ubuntu-2204"]
   // }
 
-  provisioner "ansible" {
-    command = "./packer/scripts/ansible.sh"
-    user    = "${build.User}"
-    extra_arguments = [
-      "-v",
-      "--extra-vars", "foo=bar ubtu22cis_set_grub_user_pass=P@ssw0rd ubtu22cis_bootloader_password_hash=grub.pbkdf2.sha512.Sup3rS3cr3tP4ssw0rd ubtu22cis_grub_user_passwd=$y$j9T$MBA5l/tQyWifM869nQjsi.$cTy0ConcNjIYOn6Cppo5NAky20osrkRxz4fEWA8xac7"
-    ]
-    host_alias    = "none"
-    playbook_file = "./ansible/roles/UBUNTU22-CIS/site.yml"
-    only          = ["amazon-ebs.ubuntu-2204"]
-  }
+  # provisioner "ansible" {
+  #   command = "./packer/scripts/ansible.sh"
+  #   user    = "${build.User}"
+  #   extra_arguments = [
+  #     # "-v",
+  #     "--extra-vars", "foo=bar ubtu22cis_set_grub_user_pass=P@ssw0rd ubtu22cis_bootloader_password_hash=grub.pbkdf2.sha512.Sup3rS3cr3tP4ssw0rd ubtu22cis_grub_user_passwd=$y$j9T$MBA5l/tQyWifM869nQjsi.$cTy0ConcNjIYOn6Cppo5NAky20osrkRxz4fEWA8xac7"
+  #   ]
+  #   host_alias    = "none"
+  #   playbook_file = "./ansible/roles/UBUNTU22-CIS/site.yml"
+  #   only          = ["amazon-ebs.ubuntu-2204"]
+  # }
 
   provisioner "shell-local" {
     inline = ["curl -s https://api.ipify.org/?format=none"]
