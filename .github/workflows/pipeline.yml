@@ -298,7 +298,7 @@ jobs:
           echo "ssh_public_key = \"${{ vars.TF_VAR_SSH_PUBLIC_KEY }}\"" >> terraform.auto.tfvars
           echo "ssh_private_key = <<EOF\n${{ secrets.TF_VAR_SSH_PRIVATE_KEY }}\nEOF" >> terraform.auto.tfvars
           ls -la
-          cat terraform.auto.tfvars
+          # cat terraform.auto.tfvars
         working-directory: ./terraform/awx-ansible-tower-instance
 
       - name: Upload Configuration
