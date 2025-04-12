@@ -18,8 +18,12 @@ terraform {
       version = "~> 4.66"
     }
     null = {
-      source = "hashicorp/null"
+      source  = "hashicorp/null"
       version = "3.2.4-alpha.2"
+    }
+    external = {
+      source  = "hashicorp/external"
+      version = "2.3.4"
     }
   }
 }
@@ -30,10 +34,15 @@ provider "aws" {}
 #   features {}
 # }
 
+provider "external" {}
+
+provider "null" {}
+
 provider "google" {}
 
 module "awx_ansible_tower" {
-  source                     = "github.com/star3am/terraform-hashicorp-hashiqube.git?ref=master"
+  # tflint-ignore: terraform_module_pinned_source
+  source = "github.com/star3am/terraform-hashicorp-hashiqube.git//modules/aws-hashiqube?ref=master"
   # source                     = "star3am/hashiqube/hashicorp"
   deploy_to_aws              = true
   aws_instance_type          = "t2.large"
@@ -49,8 +58,8 @@ module "awx_ansible_tower" {
 }
 
 data "external" "tower_token" {
-  count   = var.call_ansible_via_terraform ? 1 : 0
-  
+  count = var.call_ansible_via_terraform ? 1 : 0
+
   program = ["/bin/bash", "-c", "${var.tower_cli_local} login --conf.host ${var.tower_host} --conf.insecure --conf.username admin --conf.password \"${var.tower_password}\""]
 }
 
@@ -59,7 +68,7 @@ locals {
 }
 
 resource "null_resource" "awx_cli" {
-  count   = var.call_ansible_via_terraform ? 1 : 0
+  count = var.call_ansible_via_terraform ? 1 : 0
 
   triggers = {
     timestamp = local.timestamp
@@ -67,19 +76,19 @@ resource "null_resource" "awx_cli" {
 
   provisioner "remote-exec" {
     inline = [
-      "${var.tower_cli_remote} --conf.host module.awx_ansible_tower[0].awx_ansible_tower_ip_address, -f human job_templates launch ansible-role-example-role --monitor --filter status --conf.insecure --conf.token ${data.external.tower_token.result.token}",
+      "${var.tower_cli_remote} --conf.host module.awx_ansible_tower[0].awx_ansible_tower_ip_address, -f human job_templates launch ansible-role-example-role --monitor --filter status --conf.insecure --conf.token ${data.external.tower_token[0].result.token}",
     ]
     on_failure = continue
     connection {
-      type        = "ssh"
-      user        = "vagrant"
-      password    = "vagrant"
-      host        = module.awx_ansible_tower[0].awx_ansible_tower_ip_address
+      type     = "ssh"
+      user     = "vagrant"
+      password = "vagrant"
+      host     = module.awx_ansible_tower[0].awx_ansible_tower_ip_address
     }
   }
-  
+
   provisioner "local-exec" {
-    command    = "${var.tower_cli_local} --conf.host module.awx_ansible_tower[0].awx_ansible_tower_ip_address -f human job_templates launch ansible-role-example-role --monitor --filter status --conf.insecure --conf.token ${data.external.tower_token.result.token}"
+    command    = "${var.tower_cli_local} --conf.host module.awx_ansible_tower[0].awx_ansible_tower_ip_address -f human job_templates launch ansible-role-example-role --monitor --filter status --conf.insecure --conf.token ${data.external.tower_token[0].result.token}"
     on_failure = continue
   }
 }
