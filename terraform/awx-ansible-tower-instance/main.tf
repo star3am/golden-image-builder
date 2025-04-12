@@ -29,8 +29,8 @@ provider "aws" {}
 provider "google" {}
 
 module "awx_ansible_tower" {
-  # source                     = "github.com/star3am/terraform-hashicorp-hashiqube.git?ref=riaan"
-  source                     = "star3am/hashiqube/hashicorp"
+  source                     = "github.com/star3am/terraform-hashicorp-hashiqube.git?ref=master"
+  # source                     = "star3am/hashiqube/hashicorp"
   deploy_to_aws              = true
   aws_instance_type          = "t2.large"
   use_packer_image           = var.use_packer_image
