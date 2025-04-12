@@ -15,22 +15,26 @@ variable "use_packer_image" {
 }
 
 variable "tower_cli_remote" {
-  type    = string
-  default = "~/.local/bin/awx"
+  type        = string
+  default     = "~/.local/bin/awx"
+  description = "Location of awx tower cli utility"
 }
 
 variable "tower_cli_local" {
-  type    = string
-  default = "/home/vagrant/.local/bin/awx"
+  type        = string
+  default     = "/home/vagrant/.local/bin/awx"
+  description = "Location of awx tower cli utility"
 }
 
 variable "tower_host" {
-  type    = string
-  default = "http://localhost:8043/"
+  type        = string
+  default     = "http://localhost:8043/"
+  description = "The Tower host endpoint"
 }
 
 variable "tower_password" {
-  type      = string
-  sensitive = true
-  default   = "password"
+  type        = string
+  sensitive   = true
+  default     = "password"
+  description = "Tower password"
 }
