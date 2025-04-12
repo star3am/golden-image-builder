@@ -8,10 +8,10 @@ terraform {
       version = "~> 4.67"
     }
     # https://registry.terraform.io/providers/hashicorp/azurerm/latest
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 3.57"
-    }
+    # azurerm = {
+    #   source  = "hashicorp/azurerm"
+    #   version = "~> 3.57"
+    # }
     # https://registry.terraform.io/providers/hashicorp/google/latest
     google = {
       source  = "hashicorp/google"
@@ -22,9 +22,9 @@ terraform {
 
 provider "aws" {}
 
-provider "azurerm" {
-  features {}
-}
+# provider "azurerm" {
+#   features {}
+# }
 
 provider "google" {}
 
