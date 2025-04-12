@@ -38,3 +38,9 @@ variable "tower_password" {
   default     = "password"
   description = "Tower password"
 }
+
+variable "call_ansible_via_terraform" {
+  type        = bool
+  default     = false
+  description = "Call Ansible via Terraform"
+}

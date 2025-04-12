@@ -17,6 +17,10 @@ terraform {
       source  = "hashicorp/google"
       version = "~> 4.66"
     }
+    null = {
+      source = "hashicorp/null"
+      version = "3.2.4-alpha.2"
+    }
   }
 }
 
@@ -45,6 +49,8 @@ module "awx_ansible_tower" {
 }
 
 data "external" "tower_token" {
+  count   = var.call_ansible_via_terraform ? 1 : 0
+  
   program = ["/bin/bash", "-c", "${var.tower_cli_local} login --conf.host ${var.tower_host} --conf.insecure --conf.username admin --conf.password \"${var.tower_password}\""]
 }
 
@@ -53,6 +59,8 @@ locals {
 }
 
 resource "null_resource" "awx_cli" {
+  count   = var.call_ansible_via_terraform ? 1 : 0
+
   triggers = {
     timestamp = local.timestamp
   }
